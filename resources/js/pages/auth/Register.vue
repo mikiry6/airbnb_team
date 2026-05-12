@@ -20,7 +20,7 @@ defineOptions({
 <template>
     <Head title="Register" />
 
-    <div class="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-slate-100 via-blue-50 to-slate-200">
+    <div class="min-h-screen flex items-center justify-center px-4 primary_color">
 
         <!-- Card -->
         <div class="w-full max-w-md bg-white/90 backdrop-blur-sm shadow-2xl rounded-3xl border border-slate-200 p-8">

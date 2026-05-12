@@ -29,7 +29,7 @@ defineProps<{
     <Head title="Log in" />
 
     <div
-        class="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-slate-200 flex items-center justify-center px-4"
+        class="min-h-screen  primary_color flex items-center justify-center px-4"
     >
         <div
             class="w-full max-w-md bg-white/90 backdrop-blur-sm shadow-2xl rounded-3xl border border-slate-200 p-8"
@@ -156,7 +156,7 @@ defineProps<{
                 <!-- Submit -->
                 <Button
                     type="submit"
-                    class="mt-2 h-12 w-full rounded-xl bg-slate-700 text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-slate-800 hover:shadow-xl"
+                    class="mt-2 h-12 w-full rounded-xl btn_default text-base font-semibold text-white shadow-lg transition-all duration-300 hover:bg-slate-800 hover:shadow-xl"
                     :tabindex="4"
                     :disabled="processing"
                     data-test="login-button"
