@@ -45,37 +45,62 @@ defineOptions({
 
                 <div class="grid gap-6">
 
-                    <!-- Name -->
-                    <div class="grid gap-2">
-                        <Label for="name">Nom complet</Label>
-                        <Input
-                            id="name"
-                            type="text"
-                            required
-                            autofocus
-                            :tabindex="1"
-                            autocomplete="name"
-                            name="name"
-                            placeholder="Full name"
-                            class="h-12 rounded-xl border-slate-300 bg-slate-50 focus:border-blue-400 focus:ring-2 focus:ring-blue-200"
-                        />
-                        <InputError :message="errors.name" />
+                    <!-- Name  and -- Email -->
+                    <div class="flex align-middle gap-2">
+                        
+                        <div class="grid gap-2">
+                            <Label for="email">Adresse email</Label>
+                            <Input
+                                id="email"
+                                type="email"
+                                required
+                                :tabindex="2"
+                                autocomplete="email"
+                                name="email"
+                                placeholder="email@example.com"
+                                class="h-12 rounded-xl border-slate-300 bg-slate-50 focus:border-blue-400 focus:ring-2 focus:ring-blue-200"
+                            />
+                            <InputError :message="errors.email" />
+                        </div>
+                        <div class="grid gap-2">
+                            <Label for="name">Nom complet</Label>
+                            <Input
+                                id="name"
+                                type="text"
+                                required
+                                autofocus
+                                :tabindex="1"
+                                autocomplete="name"
+                                name="name"
+                                placeholder="Full name"
+                                class="h-12 rounded-xl border-slate-300 bg-slate-50 focus:border-blue-400 focus:ring-2 focus:ring-blue-200"
+                            />
+                            <InputError :message="errors.name" />
+                        </div>
+                        
                     </div>
 
-                    <!-- Email -->
+                    <!-- Role -->
                     <div class="grid gap-2">
-                        <Label for="email">Adresse email</Label>
-                        <Input
-                            id="email"
-                            type="email"
+                        <Label for="role">Choisir Type</Label>
+                        <select
+                            id="role"
                             required
                             :tabindex="2"
-                            autocomplete="email"
-                            name="email"
-                            placeholder="email@example.com"
+                            name="role"
                             class="h-12 rounded-xl border-slate-300 bg-slate-50 focus:border-blue-400 focus:ring-2 focus:ring-blue-200"
-                        />
-                        <InputError :message="errors.email" />
+                        >
+                            <option value="simple">
+                                simple
+                            </option>
+                            <option value="hotel">
+                                hotel
+                            </option>
+                            <option value="prestataire">
+                                prestataire
+                            </option>
+                        </select>
+                        <InputError :message="errors.role" />
                     </div>
 
                     <!-- Password -->
