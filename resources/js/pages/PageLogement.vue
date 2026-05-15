@@ -1,32 +1,13 @@
+<script setup>
+import Footer from '@/components/Layout/Footer.vue';
+import Navbar from '@/components/Layout/Navbar.vue';
+
+</script>
+
 <template>
     <!-- Navbar -->
-    <nav class="bg-[#36465c] text-white shadow-lg">
+    <Navbar/>
 
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
-            <h1 class="text-3xl font-bold">
-                HotelBooking
-            </h1>
-
-            <ul class="flex gap-6">
-
-                <li>
-                    <a href="/services" class="hover:text-gray-300">
-                        Services
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/logement" class="hover:text-gray-300">
-                        Logements
-                    </a>
-                </li>
-
-            </ul>
-
-        </div>
-
-    </nav>
 
     <!-- Main -->
     <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-4 gap-6">
@@ -52,6 +33,10 @@
 
                 <select class="w-full border rounded-xl p-3">
                     <option>Type logement</option>
+                </select>
+
+                <select class="w-full border rounded-xl p-3">
+                    <option>Lieu</option>
                 </select>
 
                 <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-xl">
@@ -101,7 +86,7 @@
                             </h3>
 
                             <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl">
-                                Réserver
+                                Voir detail
                             </button>
 
                         </div>
@@ -122,10 +107,6 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
                     <div class="bg-white rounded-2xl shadow-lg p-6">
-                        ⭐ Hôtel Premium
-                    </div>
-
-                    <div class="bg-white rounded-2xl shadow-lg p-6">
                         ⭐ Villa Luxe
                     </div>
 
@@ -140,4 +121,5 @@
         </div>
 
     </div>
+    <Footer/>
 </template>

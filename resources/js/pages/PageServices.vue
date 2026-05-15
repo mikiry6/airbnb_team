@@ -1,32 +1,12 @@
+<script setup lang="ts">
+import Footer from '@/components/Layout/Footer.vue';
+import Navbar from '@/components/Layout/Navbar.vue';
+
+</script>
+
 <template>
     <!-- Navbar -->
-    <nav class="bg-[#36465c] text-white shadow-lg">
-
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-
-            <h1 class="text-3xl font-bold">
-                HotelBooking
-            </h1>
-
-            <ul class="flex gap-6 font-medium">
-
-                <li>
-                    <a href="/services" class="hover:text-gray-300">
-                        Services
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/logement" class="hover:text-gray-300">
-                        Logements
-                    </a>
-                </li>
-
-            </ul>
-
-        </div>
-
-    </nav>
+    <Navbar/>
 
     <!-- Hero Section -->
     <section
@@ -56,79 +36,6 @@
     </section>
 
     <!-- Search Form -->
-    <section class="relative -mt-16 z-20">
-
-        <div class="max-w-6xl mx-auto bg-white rounded-3xl shadow-2xl p-8">
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-
-                <div>
-
-                    <label class="font-semibold block mb-2">
-                        Destination
-                    </label>
-
-                    <input
-                        type="text"
-                        placeholder="Ville ou hôtel"
-                        class="w-full border rounded-xl p-3"
-                    >
-
-                </div>
-
-                <div>
-
-                    <label class="font-semibold block mb-2">
-                        Arrivée
-                    </label>
-
-                    <input
-                        type="date"
-                        class="w-full border rounded-xl p-3"
-                    >
-
-                </div>
-
-                <div>
-
-                    <label class="font-semibold block mb-2">
-                        Départ
-                    </label>
-
-                    <input
-                        type="date"
-                        class="w-full border rounded-xl p-3"
-                    >
-
-                </div>
-
-                <div>
-
-                    <label class="font-semibold block mb-2">
-                        Personnes
-                    </label>
-
-                    <select class="w-full border rounded-xl p-3">
-                        <option>1 personne</option>
-                        <option>2 personnes</option>
-                        <option>3 personnes</option>
-                    </select>
-
-                </div>
-
-                <div class="flex items-end">
-
-                    <button class="w-full py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-xl">
-                        Rechercher
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
 
     <!-- Services -->
     <section class="max-w-7xl mx-auto px-6 py-20">
@@ -202,4 +109,5 @@
         </div>
 
     </section>
+    <Footer/>
 </template>
