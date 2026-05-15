@@ -1,4 +1,5 @@
 import { createInertiaApp } from '@inertiajs/vue3';
+import '../css/app.css'
 import { initializeTheme } from '@/composables/useAppearance';
 import AppLayout from '@/layouts/AppLayout.vue';
 import AuthLayout from '@/layouts/AuthLayout.vue';
@@ -6,6 +7,10 @@ import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { initializeFlashToast } from '@/lib/flashToast';
 import PageLayout from './layouts/PageLayout.vue';
 import AdminLayout from './layouts/AdminLayout.vue';
+import { createApp } from 'vue'
+import ContactView from './pages/contact/ContactView.vue'
+
+createApp(ContactView).mount('#app')
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
