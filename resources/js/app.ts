@@ -7,10 +7,7 @@ import SettingsLayout from '@/layouts/settings/Layout.vue';
 import { initializeFlashToast } from '@/lib/flashToast';
 import PageLayout from './layouts/PageLayout.vue';
 import AdminLayout from './layouts/AdminLayout.vue';
-import { createApp } from 'vue'
-import ContactView from './pages/contact/ContactView.vue'
 
-createApp(ContactView).mount('#app')
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -25,6 +22,8 @@ createInertiaApp({
             case name.startsWith('admin/'):
                 return AdminLayout;
             case name.startsWith('settings/'):
+            case name.startsWith('user/'):
+                return UserLayout;
             case name.startsWith('teams/'):
                 return [AppLayout, SettingsLayout];
             default:
