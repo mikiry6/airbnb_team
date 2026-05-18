@@ -10,7 +10,14 @@ class AccountContrioller extends Controller
 {
     public function index(){
 
+        // dd(auth()->user()->role);
+        $role =auth()->user()->role;
 
-        return Inertia::render('user/UserDash');
+        if($role == 'simple'){
+            return Inertia::render('user/UserDash');
+        }if($role == 'hotel'){
+            return Inertia::render('user/userHotel/UserHotelDash');
+        }
+        
     }
 }
