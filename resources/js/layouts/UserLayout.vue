@@ -19,9 +19,7 @@
     <!-- ---------Affichage des sideBar Selon le Role -->
     <user-simple-side-bar v-if="user.role === 'simple'"></user-simple-side-bar>
     <user-hotel-side-bar v-if="user.role === 'hotel'" ></user-hotel-side-bar>
-
-    
-
+  
     <!-- Main -->
     <div class="flex-1 flex flex-col">
 
