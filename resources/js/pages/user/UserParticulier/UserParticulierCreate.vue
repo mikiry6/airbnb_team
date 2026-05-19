@@ -1,19 +1,19 @@
 <template>
   <div class="min-h-screen bg-[#b1bac7] p-4 sm:p-8 space-y-8 font-sans">
     
-    <!-- CONTENEUR DU FORMULAIRE -->
+   
     <div class="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
       
-      <!-- En-tête -->
+
       <div class="bg-[#36465c] text-white p-6 text-center">
         <h2 class="text-2xl font-bold tracking-wide">Ajouter une Nouvelle Maison</h2>
         <p class="text-sm text-[#b1bac7] mt-1">Simulateur d'insertion en mode Front-End</p>
       </div>
 
-      <!-- Formulaire -->
+  
       <form @submit.prevent="handleSubmit" class="p-6 sm:p-8 space-y-6">
         
-        <!-- Titre & Prix -->
+      
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label class="block text-sm font-semibold text-[#36465c] mb-2">Titre de l'annonce</label>
@@ -37,7 +37,7 @@
           </div>
         </div>
 
-        <!-- Description -->
+  
         <div>
           <label class="block text-sm font-semibold text-[#36465c] mb-2">Description du bien</label>
           <textarea 
@@ -49,7 +49,7 @@
           ></textarea>
         </div>
 
-        <!-- Caractéristiques (Chambres, Salles de bain, Surface) -->
+      
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-[#b1bac7] bg-opacity-20 p-4 rounded-xl">
           <div>
             <label class="block text-xs font-bold text-[#36465c] uppercase mb-1">Chambres</label>
@@ -81,7 +81,7 @@
           </div>
         </div>
 
-        <!-- Localisation & URL Image -->
+        
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label class="block text-sm font-semibold text-[#36465c] mb-2">Adresse / Ville</label>
@@ -104,7 +104,7 @@
           </div>
         </div>
 
-        <!-- Aperçu de l'image dynamique (uniquement si l'URL est remplie) -->
+   
         <div v-if="form.imageUrl" class="mt-2">
           <p class="text-xs font-semibold text-[#6d7f99] mb-1">Aperçu de l'image :</p>
           <img :src="form.imageUrl" alt="Aperçu" class="w-full h-48 object-cover rounded-lg border border-[#b1bac7]" @error="handleImageError" />
@@ -129,7 +129,7 @@
       </form>
     </div>
 
-    <!-- LISTE DES MAISONS AJOUTÉES (VISUALISATION FRONT) -->
+
     <div class="w-full max-w-4xl mx-auto mt-12">
       <div class="flex justify-between items-center mb-6">
         <h3 class="text-xl font-bold text-[#36465c]">Maisons enregistrées ({{ houses.length }})</h3>
@@ -189,7 +189,7 @@ const initialFormState = {
 const form = ref({ ...initialFormState })
 const houses = ref([])
 
-// Charger les données stockées au démarrage
+
 onMounted(() => {
   const savedHouses = localStorage.getItem('mock_houses')
   if (savedHouses) {
@@ -197,7 +197,7 @@ onMounted(() => {
   }
 })
 
-// Validation et insertion locale
+
 const handleSubmit = () => {
   houses.value.unshift({ ...form.value })
   localStorage.setItem('mock_houses', JSON.stringify(houses.value))
@@ -213,7 +213,7 @@ const clearAll = () => {
   localStorage.removeItem('mock_houses')
 }
 
-// Remplacer l'image par défaut si le lien saisi est mort
+
 const handleImageError = (e) => {
   e.target.src = 'https://unsplash.com1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80'
 }

@@ -5,7 +5,7 @@ const defaultImage = 'https://unsplash.com'
 const houses = ref([])
 const selectedHouse = ref(null)
 
-// Fausses données initiales (Mock Data)
+
 const mockData = [
   {
     id: 1,
@@ -42,7 +42,7 @@ const mockData = [
   }
 ]
 
-// Charger les données du localStorage ou injecter le mock
+
 onMounted(() => {
   const saved = localStorage.getItem('crud_houses')
   if (saved && JSON.parse(saved).length > 0) {
@@ -66,7 +66,7 @@ const closeDetails = () => {
   selectedHouse.value = null
 }
 
-// Action : Modifier (via boîtes de dialogue natives rapides)
+
 const quickEdit = (house) => {
   const newTitle = prompt("Modifier le titre :", house.title)
   if (newTitle === null) return 
@@ -82,7 +82,7 @@ const quickEdit = (house) => {
   }
 }
 
-// Action : Supprimer
+
 const deleteHouse = (id) => {
   if (confirm("Supprimer définitivement cette maison du catalogue ?")) {
     houses.value = houses.value.filter(h => h.id !== id)
@@ -90,7 +90,7 @@ const deleteHouse = (id) => {
   }
 }
 
-// Sauvegarde locale
+
 const saveToLocalStorage = () => {
   localStorage.setItem('crud_houses', JSON.stringify(houses.value))
 }
@@ -115,7 +115,7 @@ const formatPrice = (p) => {
         </span>
       </div>
 
-      <!-- CAS OÙ LE CATALOGUE EST VIDE (SI TOUT EST SUPPRIMÉ) -->
+     
       <div v-if="houses.length === 0" class="text-center p-12 bg-white rounded-2xl shadow-sm">
         <p class="font-medium text-[#6d7f99]">Aucune maison n'est enregistrée.</p>
         <button 
@@ -126,14 +126,14 @@ const formatPrice = (p) => {
         </button>
       </div>
 
-      <!-- GRILLE DES CARTES MAISONS -->
+      
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div 
           v-for="house in houses" 
           :key="house.id" 
           class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col justify-between transform hover:shadow-lg transition-shadow duration-200"
         >
-          <!-- Image principale unique -->
+         
           <div class="relative h-48 bg-gray-100">
             <img :src="house.imageUrl || defaultImage" alt="Maison" class="w-full h-full object-cover" />
             <span class="absolute bottom-2 right-2 bg-[#36465c] text-white px-2 py-1 text-xs font-bold rounded">
@@ -141,7 +141,7 @@ const formatPrice = (p) => {
             </span>
           </div>
 
-          <!-- Informations textuelles -->
+          <!-- Informations -->
           <div class="p-4 space-y-4 flex-1 flex flex-col justify-between">
             <div>
               <p class="text-[10px] font-bold text-[#6d7f99] uppercase tracking-wider">📍 {{ house.location }}</p>
@@ -149,16 +149,16 @@ const formatPrice = (p) => {
               <p class="text-xs text-gray-500 line-clamp-2 mt-1">{{ house.description }}</p>
             </div>
 
-            <!-- Caractéristiques (Chambres, Salles de bain, Surface) -->
+           
             <div class="grid grid-cols-3 text-center text-[11px] py-2 border-t border-b border-[#b1bac7] border-opacity-40 text-[#6d7f99]">
               <div>🛏️ <strong>{{ house.bedrooms }}</strong> ch.</div>
               <div>🛁 <strong>{{ house.bathrooms }}</strong> sdb.</div>
               <div>📐 <strong>{{ house.surface }}</strong> m²</div>
             </div>
 
-            <!-- ACTIONS DIRECTES : VOIR, MODIFIER, SUPPRIMER -->
+           
             <div class="grid grid-cols-3 gap-2 pt-1">
-              <!-- VOIR -->
+           
               <button 
                 @click="openDetails(house)"
                 class="flex items-center justify-center gap-1 py-1.5 text-xs font-medium text-white bg-[#6d7f99] rounded-md hover:opacity-90 transition-opacity"
@@ -166,7 +166,7 @@ const formatPrice = (p) => {
                 👁️ Voir
               </button>
               
-              <!-- MODIFIER -->
+            
               <button 
                 @click="quickEdit(house)"
                 class="flex items-center justify-center gap-1 py-1.5 text-xs font-medium text-[#36465c] bg-[#b1bac7] bg-opacity-40 rounded-md hover:bg-opacity-70 transition-all"
@@ -174,7 +174,7 @@ const formatPrice = (p) => {
                 ✏️ Modifier
               </button>
 
-              <!-- SUPPRIMER -->
+          
               <button 
                 @click="deleteHouse(house.id)"
                 class="flex items-center justify-center gap-1 py-1.5 text-xs font-medium text-white bg-red-600 rounded-md hover:bg-red-700 transition-colors"
@@ -189,7 +189,7 @@ const formatPrice = (p) => {
 
     </div>
 
-    <!-- MODALE DE VISUALISATION DES DÉTAILS -->
+
     <div 
       v-if="selectedHouse" 
       class="fixed inset-0 bg-[#36465c] bg-opacity-70 flex items-center justify-center p-4 z-50 backdrop-blur-sm"
