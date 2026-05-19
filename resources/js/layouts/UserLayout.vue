@@ -3,6 +3,7 @@
     import UserHotelSideBar from '@/components/Layout/UserHotelSideBar.vue';
 
     import UserSimpleSideBar from '@/components/Layout/UserSimpleSideBar.vue';
+    import UserPrestataireSideBar from '@/components/Layout/UserPrestataireSideBar.vue';
     import { Head, usePage } from '@inertiajs/vue3';
 
     const page = usePage();
@@ -19,7 +20,7 @@
     <!-- ---------Affichage des sideBar Selon le Role -->
     <user-simple-side-bar v-if="user.role === 'simple'"></user-simple-side-bar>
     <user-hotel-side-bar v-if="user.role === 'hotel'" ></user-hotel-side-bar>
-    <user-particulier-side-bar v-if="user.role === 'particulier'" ></user-particulier-side-bar>
+    <user-prestataire-side-bar v-if="user.role === 'prestataire'" ></user-prestataire-side-bar>
 
     
 
