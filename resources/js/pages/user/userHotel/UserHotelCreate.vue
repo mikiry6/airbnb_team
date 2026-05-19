@@ -1,4 +1,10 @@
 <script setup>
+
+    import { usePage } from '@inertiajs/vue3';
+
+    const page = usePage();
+    const user = page.props.auth.user;
+
 </script>
 
 <template>
@@ -18,6 +24,7 @@
         <!-- FORMULAIRE -->
         <form class="p-8 space-y-6">
 
+          <input type="hidden" name="user_id" :value="user.id">
           <!-- TITRE -->
           <div>
             <label class="block mb-2 font-semibold text-gray-700">
@@ -127,16 +134,33 @@
           </div>
 
           <!-- LATITUDE LONGITUDE LOCALISATION -->
-           <div>
-            <label class="block mb-2 font-semibold text-gray-700">
-              Localisation
-            </label>
+           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
 
-            <input
-              type="text"
-              placeholder="Ivandry"
-              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
-            />
+            <div>
+                <label class="block mb-2 font-semibold text-gray-700">
+                  Localisation
+                </label>
+
+                <input
+                  type="text"
+                  placeholder="Ivandry"
+                  class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
+                />
+
+            </div>
+            <!-- -------------------------------------------------------------------------------------------------------------------- -->
+            <div>
+                 <label class="block mb-2 font-semibold text-gray-700">
+                  Pays
+                </label>
+
+                <input
+                  type="text"
+                  placeholder="Madagascar"
+                  class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
+                />
+            </div>
+           
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
