@@ -26,6 +26,8 @@ return new class extends Migration
             $table->integer('nb_chambre');
             $table->integer('nb_douche');
             $table->integer('nb_wc');
+            $table->integer('longitude');
+            $table->integer('latitude');
             $table->boolean('is_free')->default(true);
             $table->boolean('is_prenium')->default(false);
             $table->boolean('is_boosted')->default(false);
