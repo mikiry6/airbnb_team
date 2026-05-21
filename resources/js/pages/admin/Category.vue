@@ -1,6 +1,6 @@
 <script setup >
 
-    import Modal from '@/components/app_componnent/Modal.vue';
+    // import Modal from '@/components/app_componnent/Modal.vue';
     import { defineProps, ref } from 'vue';
     import { useForm } from '@inertiajs/vue3';
     import Category_form from './Category_form.vue';
