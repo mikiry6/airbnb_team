@@ -13,8 +13,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('localisations', function (Blueprint $table) {
+            
             $table->id();
             $table->foreignIdFor(Pays::class)->constrained()->cascadeOnDelete()->nullable();
+            $table->string('localisation');
             $table->timestamps();
         });
     }
