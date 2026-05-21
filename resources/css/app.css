@@ -69,6 +69,43 @@
   If we ever want to remove these styles, we need to add an explicit border
   color utility to any element that depends on these defaults.
 */
+/* ------------------------------------------------------------------------------------------------------------------------------------ */
+.primary_color{
+
+    @apply bg-[#36465c]
+}
+
+.secondary_color{
+
+    @apply bg-[#6d7f99]
+}
+
+.third_color{
+
+    @apply bg-[#b1bac7]
+}
+  
+.btn_primary{
+
+    @apply px-2 py-1 text-center bg-blue-500 rounded-md
+}
+
+.btn_danger{
+
+     @apply px-2 py-1 text-center bg-red-500 rounded-md
+}
+
+.btn_success{
+
+     @apply px-2 py-1 text-center bg-green-500 rounded-md
+}
+
+.btn_default{
+
+    @apply px-2 py-1 text-center bg-gray-500 rounded-md
+}
+
+/* ------------------------------------------------------------------------------------------------------------------------------------ */
 @layer base {
     *,
     ::after,
