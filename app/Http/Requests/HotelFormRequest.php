@@ -19,11 +19,21 @@ class HotelFormRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @return array<string, ValidationRule|array<mixed>|string>
+     * 
      */
     public function rules(): array
     {
         return [
-            
+
+            'user_id'=>['required'],
+            'titre'=>['required', 'min:3','max:20'],
+            'description'=>['required', 'min:15', 'max:200'],
+            'prix'=>['required','integer','min:0','max:99999999'],
+            'nb_chambre'=>['required','integer', 'min:1', 'max:50'],
+            'nb_douche'=>['required','integer', 'min:0', 'max:50'],
+            'nb_wc'=>['required','integer', 'min:0', 'max:50'],
+            'longitude'=>['required'],
+            'latitude'=>['required']
         ];
     }
 }

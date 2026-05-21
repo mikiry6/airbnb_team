@@ -1,7 +1,9 @@
 <?php
 
 use App\Models\ImageLogement;
+use App\Models\Localisation;
 use App\Models\Pays;
+use App\Models\TypeLogement;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -19,7 +21,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Pays::class)->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Localisation::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(ImageLogement::class)->nullable()->constrained()->nullOnDelete();
+            $table->enum('type_logement' ,['cabane', 'chambre', 'appartement', 'bungalow', 'villa', 'autre']);
             $table->string('titre');
             $table->text('description');
             $table->integer('prix');
