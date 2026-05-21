@@ -1,4 +1,5 @@
-<script  setup>
+<script setup>
+import { Link } from '@inertiajs/vue3';
 
 </script>
 
@@ -12,7 +13,25 @@
       </div>
 
       <nav class="flex-1 px-4 space-y-2">
-        
+        <ul>
+            <li>
+                <Link href="/user/prestataire">
+                    Tableau de Bord
+                </Link>
+            </li>
+
+            <li>
+                <Link href="/user/prestataire/service/create">
+                    Creer Service
+                </Link>
+            </li>
+
+            <li>
+                <Link href="/user/prestataire/service/show">
+                    Liste Service
+                </Link>
+            </li>
+        </ul>
       </nav>
     </aside>
     
