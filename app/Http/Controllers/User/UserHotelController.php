@@ -26,9 +26,9 @@ class UserHotelController extends Controller
         return Inertia::render('user/userHotel/UserHotelCreate');
     }   
 
-    public function store(HotelFormRequest $hotelForm , ImageLogementRequest $imageForm){
+    public function store(Request $request){
 
-        dd('mande');
+        dd($request->all());
     }
 
     public function show(){

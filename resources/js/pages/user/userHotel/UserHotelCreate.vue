@@ -2,10 +2,59 @@
 
     import { usePage } from '@inertiajs/vue3';
     import { useForm } from '@inertiajs/vue3';
+    import { onMounted } from 'vue';
     import { defineProps } from 'vue';
+    import L from 'leaflet'
+    import 'leaflet/dist/leaflet.css'
 
     const page = usePage();
     const user = page.props.auth.user;
+
+    onMounted(() => {
+
+      const map = L.map('map').setView([-18.8792, 47.5079], 13)
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
+          attribution: '&copy; OpenStreetMap contributors'
+
+      }).addTo(map)
+
+      let marker = null
+
+      map.on('click', async (e) => {
+
+          const lat = e.latlng.lat
+          const lng = e.latlng.lng
+
+          form.latitude = lat
+          form.longitude = lng
+
+          if(marker){
+
+              map.removeLayer(marker)
+          }
+
+          marker = L.marker([lat, lng]).addTo(map)
+
+          // Reverse geocoding
+          const response = await fetch(
+
+              `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
+
+          )
+
+          const data = await response.json()
+
+          form.localisation =
+              data.address.city ||
+              data.address.town ||
+              data.address.village ||
+              ''
+
+          form.pays = data.address.country || ''
+      })
+  })
 
     const props = defineProps([
 
@@ -13,7 +62,8 @@
     ])
 
     const form = useForm({
-
+      
+      user_id:user.id,
       titre: props.logement?.titre ?? '',
       type_logement: props.logement?.type_logement ?? '',
       description: props.logement?.description ?? '',
@@ -22,11 +72,28 @@
       nb_douche: props.logement?.nb_douche ?? '',
       nb_wc: props.logement?.nb_wc ?? '',
       longitude: props.logement?.longitude ?? '',
-      latitude: props.logement?.latitude ?? ''
-      
+      latitude: props.logement?.latitude ?? '',
+      image_principale:null,
+      localisation: props.logement?.localisation ?? '',
+      pays: props.logement?.pays ?? '',
 
   })
 
+  const handleSubmit = ()=>{
+
+
+      form.post('/user/hotel/chambre/create',{
+        forceFormData: true,
+        onSuccess:()=>{
+
+        },
+        onError:()=>{
+
+        }
+      })
+
+      
+  }
 
 </script>
 
@@ -39,24 +106,25 @@
           <h1 class="text-3xl font-bold text-white">
             Création Chambre
           </h1>
-          <p classe="text-gray-200 mt-2">
+          <p class="text-gray-200 mt-2">
             Ajouter une Chambre  à la plateforme
           </p>
         </div>
 
         <!-- FORMULAIRE -->
-        <form class="p-8 space-y-6">
+        <form class="p-8 space-y-6" @submit.prevent="handleSubmit" enctype="multipart/form-data" >
 
-          <input type="hidden" name="user_id" :value="user.id">
+          <input type="hidden" name="user_id" v-model="form.user_id">
           <!-- TYPE LOGEMENT -->
           <div>
             <label class="block mb-2 font-semibold text-gray-700">
               Type Logement
             </label>
             <select
+
+              v-model="form.type_logement"
               name="type_logement"
-              type="text"
-              classe="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
             >
               <option value="cabane">Cabane</option>
               <option value="chambre">Chambre</option>
@@ -75,9 +143,10 @@
             </label>
             <input
               name="titre"
+              v-model="form.titre"
               type="text"
               placeholder="Ex: Appartement moderne à Ivandry"
-              classe="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
             />
           </div>
 
@@ -89,7 +158,8 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <input
-                name=""
+                name="image_principale"
+                @change = "form.image_principale = $event.target.files[0]"
                 type="file"
                 class="w-full border border-gray-300 rounded-lg p-3"
               />
@@ -120,6 +190,8 @@
               </label>
 
               <input
+                name="nb_chambre"
+                v-model="form.nb_chambre"
                 type="number"
                 min="0"
                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
@@ -132,6 +204,8 @@
               </label>
 
               <input
+                name="nb_douche"
+                v-model="form.nb_douche"
                 type="number"
                 min="0"
                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
@@ -144,6 +218,8 @@
               </label>
 
               <input
+                name="nb_wc"
+                v-model="form.nb_wc"
                 type="number"
                 min="0"
                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
@@ -159,6 +235,8 @@
             </label>
 
             <textarea
+              name="description"
+              v-model="form.description"
               rows="5"
               placeholder="Décrivez le logement..."
               class="w-full border border-gray-300 rounded-lg px-4 py-3 resize-none focus:outline-none focus:ring-2 focus:ring-[#36465c]"
@@ -172,6 +250,8 @@
             </label>
 
             <input
+              name="prix"
+              v-model="form.prix"
               type="number"
               placeholder="Ex: 120000"
               class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
@@ -180,30 +260,40 @@
 
           <!-- LATITUDE LONGITUDE LOCALISATION -->
            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div
+                id="map"
+                class="w-full h-[100] rounded-xl"
+            ></div>
 
             <div>
+              <div>
                 <label class="block mb-2 font-semibold text-gray-700">
                   Localisation
                 </label>
 
                 <input
+                  name="localisation"
+                  v-model="form.localisation"
                   type="text"
                   placeholder="Ivandry"
                   class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
                 />
 
-            </div>
-            <!-- -------------------------------------------------------------------------------------------------------------------- -->
+              </div>
+              <!-- -------------------------------------------------------------------------------------------------------------------- -->
             <div>
                  <label class="block mb-2 font-semibold text-gray-700">
                   Pays
                 </label>
 
                 <input
+                  name= "pays"
+                  v-model="form.pays"
                   type="text"
                   placeholder="Madagascar"
                   class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
                 />
+            </div>
             </div>
            
           </div>
@@ -216,6 +306,8 @@
               </label>
 
               <input
+                name="latitude"
+                v-model="form.latitude"
                 type="text"
                 placeholder="-18.8792"
                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
@@ -228,6 +320,8 @@
               </label>
 
               <input
+                name="longitude"
+                v-model="form.longitude"
                 type="text"
                 placeholder="47.5079"
                 class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
