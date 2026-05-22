@@ -32,8 +32,10 @@ class HotelFormRequest extends FormRequest
             'nb_chambre'=>['required','integer', 'min:1', 'max:50'],
             'nb_douche'=>['required','integer', 'min:0', 'max:50'],
             'nb_wc'=>['required','integer', 'min:0', 'max:50'],
+            'image_principale'=>['required','image'],
             'longitude'=>['required'],
-            'latitude'=>['required']
+            'latitude'=>['required'],
+            
         ];
     }
 }

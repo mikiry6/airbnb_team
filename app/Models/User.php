@@ -14,6 +14,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 
 
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
+#[Fillable(['name', 'email', 'role', 'password'])]
 class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */

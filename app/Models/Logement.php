@@ -24,7 +24,4 @@ class Logement extends Model
         return $this->belongsTo(ImageLogement::class);
     }
 
-    
-
-
 }
