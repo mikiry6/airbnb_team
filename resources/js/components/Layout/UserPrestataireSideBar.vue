@@ -12,7 +12,7 @@
       </div>
 
       <nav class="flex-1 px-4 space-y-2">
-
+        
       </nav>
     </aside>
     
