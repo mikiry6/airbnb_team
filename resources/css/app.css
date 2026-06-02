@@ -87,22 +87,22 @@
   
 .btn_primary{
 
-    @apply px-2 py-1 text-center bg-blue-500 rounded-md
+    @apply px-2 py-1 text-center bg-blue-500 rounded-md cursor-pointer
 }
 
 .btn_danger{
 
-     @apply px-2 py-1 text-center bg-red-500 rounded-md
+     @apply px-2 py-1 text-center bg-red-500 rounded-md cursor-pointer
 }
 
 .btn_success{
 
-     @apply px-2 py-1 text-center bg-green-500 rounded-md
+     @apply px-2 py-1 text-center bg-green-500 rounded-md cursor-pointer 
 }
 
 .btn_default{
 
-    @apply px-2 py-1 text-center bg-gray-500 rounded-md
+    @apply px-2 py-1 text-center bg-gray-500 rounded-md cursor-pointer
 }
 
 /* ------------------------------------------------------------------------------------------------------------------------------------ */
