@@ -21,14 +21,14 @@
             </li>
 
             <li>
-                <Link href="/user/hotel/chambre/create">
-                    Creer Chambre
+                <Link href="/user/hotel/liste">
+                    Liste Hotel
                 </Link>
             </li>
 
             <li>
-                <Link href="/user/hotel/chambre/show">
-                    Liste Chambre
+                <Link href="/settings/profile">
+                    Profil
                 </Link>
             </li>
         </ul>
