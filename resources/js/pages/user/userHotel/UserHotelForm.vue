@@ -7,8 +7,8 @@
     import L from 'leaflet'
     import 'leaflet/dist/leaflet.css'
 
-    const page = usePage();
-    const user = page.props.auth.user;
+    // const page = usePage();
+    // const user = page.props.auth.user;
 
     onMounted(() => {
 
@@ -58,31 +58,27 @@
 
     const props = defineProps([
 
-       'logement'
+       'hotel'
     ])
 
     const form = useForm({
       
-      user_id:user.id,
-      titre: props.logement?.titre ?? '',
-      type_logement: props.logement?.type_logement ?? '',
-      description: props.logement?.description ?? '',
-      prix: props.logement?.prix ?? '',
-      nb_chambre: props.logement?.nb_chambre ?? '',
-      nb_douche: props.logement?.nb_douche ?? '',
-      nb_wc: props.logement?.nb_wc ?? '',
-      longitude: props.logement?.longitude ?? '',
-      latitude: props.logement?.latitude ?? '',
+      nom: props.hotel?.nom ?? '',
+      description: props.hotel?.description ?? '',
+      longitude: props.hotel?.longitude ?? '',
+      latitude: props.hotel?.latitude ?? '',
       image_principale:null,
-      localisation: props.logement?.localisation ?? '',
-      pays: props.logement?.pays ?? '',
+      image_1:null,
+      image_2:null,
+      localisation: props.hotel?.localisation ?? '',
+      pays: props.hotel?.pays ?? ''
 
   })
 
   const handleSubmit = ()=>{
 
 
-      form.post('/user/hotel/chambre/create',{
+      form.post('/user/hotel/create',{
         forceFormData: true,
         onSuccess:()=>{
 
@@ -104,7 +100,7 @@
         <!-- HEADER -->
         <div class="primary_color p-6">
           <h1 class="text-3xl font-bold text-white">
-            Création Chambre
+            Création Hotel
           </h1>
           <p class="text-gray-200 mt-2">
             Ajouter une Chambre  à la plateforme
@@ -114,36 +110,14 @@
         <!-- FORMULAIRE -->
         <form class="p-8 space-y-6" @submit.prevent="handleSubmit" enctype="multipart/form-data" >
 
-          <input type="hidden" name="user_id" v-model="form.user_id">
-          <!-- TYPE LOGEMENT -->
-          <div>
-            <label class="block mb-2 font-semibold text-gray-700">
-              Type Logement
-            </label>
-            <select
-
-              v-model="form.type_logement"
-              name="type_logement"
-              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
-            >
-              <option value="cabane">Cabane</option>
-              <option value="chambre">Chambre</option>
-              <option value="appartement">Appartement</option>
-              <option value="bungalow">Bungalow</option>
-              <option value="villa">villa</option>
-              <option value="autre">Autre</option>
-
-            </select>
-          </div>
-
           <!-- TITRE -->
           <div>
             <label class="block mb-2 font-semibold text-gray-700">
               Titre
             </label>
             <input
-              name="titre"
-              v-model="form.titre"
+              name="nom"
+              v-model="form.nom"
               type="text"
               placeholder="Ex: Appartement moderne à Ivandry"
               class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
@@ -165,67 +139,20 @@
               />
 
               <input
+                name="image_1"
+                @change = "form.image_1 = $event.target.files[0]"
                 type="file"
                 class="w-full border border-gray-300 rounded-lg p-3"
               />
 
               <input
+                name="image_2"
+                @change = "form.image_2 = $event.target.files[0]"
                 type="file"
                 class="w-full border border-gray-300 rounded-lg p-3"
               />
 
-              <input
-                type="file"
-                class="w-full border border-gray-300 rounded-lg p-3"
-              />
             </div>
-          </div>
-
-          <!-- CHAMBRE DOUCHE WC -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-            <div>
-              <label class="block mb-2 font-semibold text-gray-700">
-                Nombre de chambres
-              </label>
-
-              <input
-                name="nb_chambre"
-                v-model="form.nb_chambre"
-                type="number"
-                min="0"
-                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
-              />
-            </div>
-
-            <div>
-              <label class="block mb-2 font-semibold text-gray-700">
-                Douche
-              </label>
-
-              <input
-                name="nb_douche"
-                v-model="form.nb_douche"
-                type="number"
-                min="0"
-                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
-              />
-            </div>
-
-            <div>
-              <label class="block mb-2 font-semibold text-gray-700">
-                WC
-              </label>
-
-              <input
-                name="nb_wc"
-                v-model="form.nb_wc"
-                type="number"
-                min="0"
-                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
-              />
-            </div>
-
           </div>
 
           <!-- DESCRIPTION -->
@@ -241,21 +168,6 @@
               placeholder="Décrivez le logement..."
               class="w-full border border-gray-300 rounded-lg px-4 py-3 resize-none focus:outline-none focus:ring-2 focus:ring-[#36465c]"
             ></textarea>
-          </div>
-
-         <!-- PRIX -->
-          <div>
-            <label class="block mb-2 font-semibold text-gray-700">
-              Prix
-            </label>
-
-            <input
-              name="prix"
-              v-model="form.prix"
-              type="number"
-              placeholder="Ex: 120000"
-              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
-            />
           </div>
 
           <!-- LATITUDE LONGITUDE LOCALISATION -->
