@@ -114,7 +114,7 @@ class UserCreateHotelController extends Controller
 
     public function delete( Hotel $hotel){
 
-        // dd('en cours de suppression'.' '.$hotel);
+        // dd('en cours de suppression');
         $images = [];
         $champsImages = [
             'image_principale',
@@ -130,6 +130,7 @@ class UserCreateHotelController extends Controller
                 );
             }
         }
+        $hotel->delete();
         
     }
 
