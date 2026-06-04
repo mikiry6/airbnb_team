@@ -99,6 +99,9 @@ defineOptions({
                             <option value="prestataire">
                                 prestataire
                             </option>
+                            <option value="prestataire">
+                                particulier
+                            </option>
                         </select>
                         <InputError :message="errors.role" />
                     </div>

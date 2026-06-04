@@ -5,6 +5,7 @@
     import UserSimpleSideBar from '@/components/Layout/UserSimpleSideBar.vue';
     import UserPrestataireSideBar from '@/components/Layout/UserPrestataireSideBar.vue';
     import { Head, usePage } from '@inertiajs/vue3';
+import UserParcticulierSidebar from '@/components/Layout/UserParcticulierSidebar.vue';
 
     const page = usePage();
     // utilisateur connecté
@@ -20,9 +21,7 @@
     <!-- ---------Affichage des sideBar Selon le Role -->
     <user-simple-side-bar v-if="user.role === 'simple'"></user-simple-side-bar>
     <user-hotel-side-bar v-if="user.role === 'hotel'" ></user-hotel-side-bar>
-    <user-prestataire-side-bar v-if="user.role === 'prestataire'" ></user-prestataire-side-bar>
-
-    
+    <user-parcticulier-sidebar v-if="user.role === 'particulier'"></user-parcticulier-sidebar>
 
     <!-- Main -->
     <div class="flex-1 flex flex-col">

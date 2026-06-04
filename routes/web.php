@@ -29,4 +29,5 @@ require __DIR__.'/settings.php';
 require __DIR__ .'/account.php';
 require __DIR__ .'/userHotel.php';
 require __DIR__ .'/userPrestataire.php';
+require __DIR__ .'/userParticulier.php';
 

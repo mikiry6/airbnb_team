@@ -15,9 +15,10 @@ return new class extends Migration
             
             $table->id();
             $table->string('image_principale');
-            $table->string('image_1');
-            $table->string('image_2');
-            $table->string('image_3');
+            $table->string('image_1')->nullable();
+            $table->string('image_2')->nullable();
+            $table->string('image_3')->nullable();
+            $table->string('image_4')->nullable();
             $table->timestamps();
         });
     }

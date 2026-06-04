@@ -19,6 +19,8 @@ class AccountContrioller extends Controller
             return Inertia::render('user/userHotel/UserHotelDash');
         }if($role == 'prestataire'){
             return Inertia::render('user/userPrestataire/UserPrestataireDash');
+        }if($role == 'particulier'){
+            return Inertia::render('user/UserParticulier/UserParticulierDash');
         }
         
     }
