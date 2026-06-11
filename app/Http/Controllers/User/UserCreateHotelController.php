@@ -19,7 +19,16 @@ class UserCreateHotelController extends Controller
 
     public function index(){
 
-        return Inertia::render('user/userHotel/UserHotelDash');
+        $hotels = Hotel::all();
+        $user_id = Auth::id();
+        $chambres = Logement::where('user_id', "$user_id")->get();
+        // dd( $hotel);
+        // dd($chambres);
+        return Inertia::render('user/userHotel/UserHotelDash',[
+
+            'hotels'=>$hotels,
+            'chambres'=>$chambres
+        ]);
     }
 
     public function read_one(Hotel $hotel){
@@ -63,9 +72,16 @@ class UserCreateHotelController extends Controller
         // dd($request->all());
         $data =  $request->validated();
 
-        $pays = Pays::firstOrcreate([
-            'pays' => $request->pays
-        ]);
+        $pays = Pays::firstOrCreate(
+            // 1er tableau : Les critères de recherche (Est-ce que ce pays existe déjà ?)
+            ['pays' => $request->pays], 
+            
+            // 2e tableau : Les valeurs additionnelles à insérer si le pays n'existe pas
+            [
+                'longitude' => $request->longitude,
+                'latitude'  => $request->latitude
+            ]
+        );
 
         $localisation = Localisation::firstOrcreate([
             'pays_id'=>$pays->id,

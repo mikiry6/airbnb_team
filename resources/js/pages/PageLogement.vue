@@ -1,18 +1,25 @@
 <script setup>
-import Footer from '@/components/Layout/Footer.vue';
-import Navbar from '@/components/Layout/Navbar.vue';
+    import Footer from '@/components/Layout/Footer.vue';
+    import Navbar from '@/components/Layout/Navbar.vue';
+import { Link } from '@inertiajs/vue3';
+
+    import { defineProps } from 'vue';
+
+    const props = defineProps([
+        
+        'logements'
+    ])
 
 </script>
 
 <template>
+
     <!-- Navbar -->
     <Navbar/>
-
-
     <!-- Main -->
     <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 lg:grid-cols-4 gap-6">
 
-        <!-- Filter -->
+        <!------------------------------ FILTREAGE  ----------------------------->
         <div class="bg-white rounded-2xl shadow-lg p-6 h-fit">
 
             <h2 class="text-2xl font-bold mb-6">
@@ -21,14 +28,35 @@ import Navbar from '@/components/Layout/Navbar.vue';
 
             <div class="space-y-4">
 
+                <!-- VILLE ET PAYS -->
                 <input
                     type="text"
                     placeholder="Recherche..."
                     class="w-full border rounded-xl p-3"
                 >
+                <!-- PIECE -->
+                <input
+                    type="Number"
+                    placeholder="Nbr Piece"
+                    class="w-full border rounded-xl p-3"
+                >
+                <!-- PRIX -->
+                <div
+                    class="  flex gap-1 w-full "
+                >
+                    <input class="w-full border rounded-xl p-3" type="number" placeholder="prix min...">
+                    <input class="w-full border rounded-xl p-3" type="number"  placeholder="prix max..." >
 
-                <select class="w-full border rounded-xl p-3">
-                    <option>Prix</option>
+                </div>
+
+                 <select class="w-full border rounded-xl p-3">
+                    <option value="">Nbr Etoiles</option>
+                    <optgroup>
+                        <option value="">⭐</option>
+                        <option value="">⭐⭐</option>
+                        <option value="">⭐⭐⭐</option>
+                        <option value="">⭐⭐⭐⭐</option>
+                    </optgroup>
                 </select>
 
                 <select class="w-full border rounded-xl p-3">
@@ -36,7 +64,7 @@ import Navbar from '@/components/Layout/Navbar.vue';
                 </select>
 
                 <select class="w-full border rounded-xl p-3">
-                    <option>Lieu</option>
+                    <option>Pays</option>
                 </select>
 
                 <button class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-xl">
@@ -47,79 +75,64 @@ import Navbar from '@/components/Layout/Navbar.vue';
 
         </div>
 
-        <!-- Content -->
+        <!-- -----------------------BOUCLAGE DES LOGEMENTS -------------- -->
         <div class="lg:col-span-3">
 
-            <!-- Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
 
-                <!-- Card -->
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300">
+                <div 
+                    v-for="hebergement in logements" 
+                    :key="hebergement.type + '-' + hebergement.id"
+                    class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300">
 
                     <img
-                        src="https://images.unsplash.com/photo-1566073771259-6a8506099945"
+                        :src="'storage/'+hebergement.image"
+                        :alt="'image ' + hebergement.nom"
                         class="w-full h-60 object-cover"
                     >
 
                     <div class="p-5">
+                        <span 
+                            class="text-xs font-semibold px-2 py-1 rounded"
+                            :class="hebergement.type === 'hotel' ? 'bg-amber-100 text-amber-800' : 'bg-green-100 text-green-800'"
+                        >
+                            {{ hebergement.type === 'hotel' ? 'Hôtel' : 'Logement' }}
+                        </span>
 
-                        <div class="flex justify-between items-center mb-2">
+                        <h3 class="text-xl font-bold mt-2">{{ hebergement.nom }}</h3>
+                        <p class="text-gray-600 text-sm line-clamp-2 mt-1">{{ hebergement.description }}</p>
 
-                            <h2 class="text-2xl font-bold">
-                                Hotel Paradise
-                            </h2>
-
-                            <span class="text-yellow-500">
-                                ⭐ 4.8
+                        <div class="mt-4 flex justify-between items-center">
+                            <span v-if="hebergement.prix" class="font-bold text-blue-600">
+                                {{ hebergement.prix }} € / nuit
+                            </span>
+                            <span v-else class="font-bold text-amber-600 text-sm">
+                                Voir les chambres
                             </span>
 
+                            <Link
+                                v-if="hebergement.type == 'hotel'"
+                                :href="`/logement/hotel/detail/${hebergement.id}`"
+                                class="text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-lg"
+                            >
+                                Détails
+                            </Link>
+                            <Link
+                                v-else
+                                :href="`/logement/maison/detail/${hebergement.id}`"
+                                class="text-sm bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-lg"
+                            >
+                                Détails
+                            </Link>
                         </div>
-
-                        <p class="text-gray-500 mb-4">
-                            Antananarivo
-                        </p>
-
-                        <div class="flex justify-between items-center">
-
-                            <h3 class="text-blue-500 text-xl font-bold">
-                                120 000 Ar / nuit
-                            </h3>
-
-                            <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl">
-                                Voir detail
-                            </button>
-
-                        </div>
-
                     </div>
-
                 </div>
 
             </div>
-
-            <!-- Popular -->
-            <section class="mt-14">
-
-                <h2 class="text-3xl font-bold mb-6">
-                    Logements populaires
-                </h2>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-                    <div class="bg-white rounded-2xl shadow-lg p-6">
-                        ⭐ Villa Luxe
-                    </div>
-
-                    <div class="bg-white rounded-2xl shadow-lg p-6">
-                        ⭐ Appartement VIP
-                    </div>
-
-                </div>
-
-            </section>
 
         </div>
 
     </div>
     <Footer/>
+
 </template>

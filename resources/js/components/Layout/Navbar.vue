@@ -1,34 +1,110 @@
+<script setup lang="ts">
+
+  import { Head, Link } from '@inertiajs/vue3';
+  import { login, register } from '@/routes';
+  
+  withDefaults(
+
+    defineProps<{
+        canRegister: boolean;
+        }>(),
+        {
+            canRegister: true,
+        },
+    );
+
+</script>
+
 <template>
-  <nav class="bg-white border-b border-[#E2E8F0] px-8 py-5 flex justify-between items-center sticky top-0 z-50">
+    <div
+                class=" mx-auto px-20 py-5  bg-slate-900"
+            >
 
-    <!-- LOGO SLOT -->
-    <div class="text-2xl font-bold text-[#3B82F6]">
-      <slot name="logo">StayEase</slot>
-    </div>
+                <nav
+                    class="flex items-center justify-between"
+                >
 
-    <!-- SEARCH SLOT -->
-    <div class="hidden md:flex items-center gap-3 bg-[#EFF6FF] border border-[#DBEAFE] px-4 py-2 rounded-full w-[420px]">
-      <slot name="search">
-        <input
-          type="text"
-          placeholder="Where are you going?"
-          class="bg-transparent outline-none flex-1 text-sm"
-        />
-      </slot>
+                    <!-- LOGO -->
 
-      <button class="bg-[#3B82F6] hover:bg-[#2563EB] transition text-white px-4 py-2 rounded-full text-sm">
-        Search
-      </button>
-    </div>
+                    <Link
+                        href="/"
+                        class="text-2xl font-bold text-white"
+                    >
+                        StayFinder
+                    </Link>
 
-    <!-- ACTIONS SLOT -->
-    <div>
-      <slot name="actions">
-        <button class="bg-[#3B82F6] hover:bg-[#2563EB] transition text-white px-5 py-2 rounded-xl">
-          Login
-        </button>
-      </slot>
-    </div>
+                    <!-- MENU -->
 
-  </nav>
+                    <div
+                        class="hidden md:flex items-center gap-8 text-slate-200"
+                    >
+
+                        <Link
+                            href="/logement"
+                            class="hover:text-white transition"
+                        >
+                            Logements
+                        </Link>
+
+                        <a
+                            href="#"
+                            class="hover:text-white transition"
+                        >
+                            Activités
+                        </a>
+
+                        <a
+                            href="#"
+                            class="hover:text-white transition"
+                        >
+                            Destinations
+                        </a>
+
+                        <a
+                            href="#"
+                            class="hover:text-white transition"
+                        >
+                            À propos
+                        </a>
+
+                    </div>
+
+                    <!-- AUTH -->
+
+                    <div
+                        class="flex items-center gap-3"
+                    >
+
+                        <Link
+                            v-if="$page.props.auth.user"
+                            href="/user"
+                            class="px-5 py-2 rounded-xl bg-white text-slate-900 font-medium hover:bg-slate-100 transition"
+                        >
+                            Dashboard
+                        </Link>
+
+                        <template v-else>
+
+                            <Link
+                                :href="login()"
+                                class="text-slate-200 hover:text-white transition"
+                            >
+                                Connexion
+                            </Link>
+
+                            <Link
+                                v-if="canRegister"
+                                :href="register()"
+                                class="px-5 py-2 rounded-xl bg-white text-slate-900 font-medium hover:bg-slate-100 transition"
+                            >
+                                Inscription
+                            </Link>
+
+                        </template>
+
+                    </div>
+
+                </nav>
+
+            </div>
 </template>

@@ -15,6 +15,8 @@ return new class extends Migration
             
             $table->id();
             $table->string('pays')->unique();
+            $table->decimal('longitude', 10, 7)->nullable();
+            $table->decimal('latitude', 10, 7)->nullable();
             $table->timestamps();
         });
     }

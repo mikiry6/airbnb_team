@@ -73,6 +73,14 @@
                   Voir plus
              </Link>
 
+             <Link
+                  
+                  href="/"
+                  class=" btn_default flex-1 text-white text-center font-semibold py-2.5 rounded-xl transition"
+              >
+                  Modifier
+             </Link>
+
               <button
                   @click="destroy(hotel.id)"
                   class="flex-1 bg-red-500 hover:bg-red-600 text-white  text-center font-semibold py-2.5 rounded-xl transition cursor-pointer"
