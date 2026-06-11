@@ -52,6 +52,9 @@ class LogementController extends Controller
 
     public function detail(Hotel $hotel){
         
-        return Inertia::render();
+        return Inertia::render('Hotel_detail',[
+
+            'hotel'=>$hotel->load('chambres','localisation','pays')
+        ]);
     }
 }
