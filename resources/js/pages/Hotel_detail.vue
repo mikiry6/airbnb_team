@@ -100,7 +100,7 @@
                     <div class="flex items-center justify-center">
 
                         <Link
-                            :href="`/user/hotel/${hotel.id}/chambre/liste`"
+                            :href="`/logement/hotel/${hotel.id}/chambre/liste`"
                             class=" cursor-poinnter inline-flex items-center justify-center px-7 py-6 rounded-xl bg-[#0d65e1] text-white font-medium hover:bg-[#166fec] transition cursor-pointer"
                         >
                             Voir liste Chmabre
