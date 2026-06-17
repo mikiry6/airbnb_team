@@ -4,10 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Logement extends Model
+class Hotel extends Model
 {
     protected $guarded = ['id'];
+
+    public function chambres():HasMany{
+
+        return $this->hasMany(Logement::class);
+    }
 
     public function pays():BelongsTo
     {
@@ -18,15 +24,4 @@ class Logement extends Model
     {
         return $this->belongsTo(Localisation::class);
     }
-
-    public function imageLogement():BelongsTo
-    {
-        return $this->belongsTo(ImageLogement::class);
-    }
-
-    public function Hotel():BelongsTo
-    {
-        return $this->belongsTo(Hotel::class);
-    }
-
 }

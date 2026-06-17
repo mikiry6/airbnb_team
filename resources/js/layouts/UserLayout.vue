@@ -5,6 +5,7 @@
     import UserSimpleSideBar from '@/components/Layout/UserSimpleSideBar.vue';
     import UserPrestataireSideBar from '@/components/Layout/UserPrestataireSideBar.vue';
     import { Head, usePage } from '@inertiajs/vue3';
+import Navbar from '@/components/Layout/Navbar.vue';
 
     const page = usePage();
     // utilisateur connecté
@@ -18,15 +19,19 @@
   <div class="flex h-screen overflow-hidden bg-">
 
     <!-- ---------Affichage des sideBar Selon le Role -->
-    <user-simple-side-bar v-if="user.role === 'simple'"></user-simple-side-bar>
+    
     <user-hotel-side-bar v-if="user.role === 'hotel'" ></user-hotel-side-bar>
     <user-prestataire-side-bar v-if="user.role === 'prestataire'" ></user-prestataire-side-bar>
 
     <!-- Main -->
     <div class="flex-1 flex flex-col">
 
+      <!-- Nav -->
+      <navbar v-if="user.role === 'simple'"
+      />
+      
       <!-- Topbar -->
-      <header class="bg-white shadow p-4 flex justify-between items-center">
+      <header class="bg-white shadow p-4 flex justify-between items-center" v-else>
 
         <h1 class="text-xl font-semibold">Dashboard</h1>
 

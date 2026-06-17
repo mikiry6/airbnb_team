@@ -5,9 +5,9 @@ import Swal from 'sweetalert2'
 import ServiceMap from '@/components/ServiceMap.vue'
 
 defineProps({
-
     services: Array
-})
+});
+
 
 const form = useForm({})
 
@@ -67,7 +67,7 @@ const handleDelete = (id) => {
         <div class="grid md:grid-cols-3 gap-8">
 
             <div
-                v-for="service in services"
+                v-for="service in services.data"
                 :key="service.id"
                 class="bg-white rounded-3xl overflow-hidden shadow-xl"
             >
@@ -129,6 +129,21 @@ const handleDelete = (id) => {
 
             </div>
 
+                <div class="flex justify-center mt-8 gap-2">
+
+                    <Link
+                        v-for="link in services.links"
+                        :key="link.label"
+                        :href="link.url"
+                        v-html="link.label"
+                        class="px-4 py-2 border rounded"
+                        :class="{
+                            'bg-blue-500 text-white': link.active,
+                            'text-gray-400': !link.url
+                        }"
+                    />
+
+                </div>
         </div>
 
     </div>

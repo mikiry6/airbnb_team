@@ -1,4 +1,6 @@
 <script  setup>
+import { Link } from '@inertiajs/vue3';
+
 </script>
 
 <template>
@@ -12,6 +14,19 @@
       <nav class="flex-1 px-4 space-y-2">
         User Simple
       </nav>
+
+      <ul>
+
+        <Link
+            href="/simple/profile"
+            class="block bg-white p-4 rounded-xl hover:bg-[#36465c] hover:text-white transition"
+        >
+
+            Profile
+
+        </Link>
+
+      </ul>
     </aside>
 </template>
 

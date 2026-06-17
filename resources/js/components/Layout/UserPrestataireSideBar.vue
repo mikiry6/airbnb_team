@@ -33,11 +33,11 @@ import { Link } from '@inertiajs/vue3'
             <li>
 
                 <Link
-                    href="/prestataire/dashboard"
+                    href="/prestataire/tableau-de-board"
                     class="block bg-white p-4 rounded-xl hover:bg-[#36465c] hover:text-white transition"
                 >
 
-                    Tableau de Bord
+                    Tableau de board
 
                 </Link>
 
@@ -66,6 +66,19 @@ import { Link } from '@inertiajs/vue3'
                 >
 
                     Liste Services
+
+                </Link>
+
+            </li>
+
+            <li>
+
+                <Link
+                    href="/settings/profile"
+                    class="block bg-white p-4 rounded-xl hover:bg-[#36465c] hover:text-white transition"
+                >
+
+                    Profile
 
                 </Link>
 

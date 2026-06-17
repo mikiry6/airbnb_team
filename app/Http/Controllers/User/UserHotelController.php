@@ -3,37 +3,101 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\HotelFormRequest;
-use App\Http\Requests\ImageLogementRequest;
+use App\Http\Requests\ChambreFormRequest;
+use App\Models\ImageLogement;
+use App\Models\Localisation;
 use App\Models\Logement;
+use App\Models\Pays;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 use Inertia\Inertia;
 
 class UserHotelController extends Controller
 {
-    public function index(){
+
+    public function create($hotel_id){
 
         $logement = new Logement();
-        // dd($logement);
-        return Inertia::render('user/userHotel/UserHotelDash',[
+        // -------------Set les Relations
+        // $logement->setRelation('pays', new Pays());
+        // $logement->setRelation('localisation', new Localisation());
+        // $logement->setRelation('imageLogement', new ImageLogement());
 
-            'logement'=>$logement
+        return Inertia::render('user/userHotel/UserHotelChambreForm',[
+            
+            'logement'=>$logement,
+            'hotel_id'=>$hotel_id
         ]);
-    }
-
-    public function create(  ){
-
-        return Inertia::render('user/userHotel/UserHotelCreate');
     }   
 
-    public function store(Request $request){
+    public function store(ChambreFormRequest $request , $hotel_id){
 
-        dd($request->all());
+        // dd($request->all());
+        // $pays = Pays::firstOrcreate([
+        //     'pays' => $request->pays
+        // ]);
+
+        // $localisation = Localisation::firstOrcreate([
+        //     'pays_id'=>$pays->id,
+        //     'localisation'=>$request->localisation
+        // ]);
+
+        // ------------------POUR ENREGISTREMENT IMAGE 
+        $images = [];
+
+        // liste des champs images
+        $champsImages = [
+
+            'image_principale',
+            'image_1',
+            'image_2',
+            'image_3'
+        ];
+
+        foreach ($champsImages as $champ) {
+
+            if ($request->hasFile($champ)) {
+
+                $images[$champ] = $request
+                    ->file($champ)
+                    ->store('image_logements', 'public');
+
+            }else{
+
+                $images[$champ] = null;
+
+            }
+        }
+        $image_logement = ImageLogement::create($images);
+
+        // dd($pays->id);
+        $data =  $request->validated();
+
+        $data['user_id'] = Auth::id();
+        $data['hotel_id'] = $hotel_id;
+        $data['image_logement_id'] = $image_logement->id;
+
+        Logement::create($data);
+
+        return redirect('/user');
+
     }
 
-    public function show(){
+    public function read_all($hotel_id){
 
-        return Inertia::render('user/userHotel/UserHotelShow');
+        $chambres = Logement::where('hotel_id', $hotel_id)->with('imageLogement')->get();
+
+        return Inertia::render('user/userHotel/UserHotelChambreListe',[
+
+            'chambres'=>$chambres
+
+        ]);
     }
+    
+    public function delete( Logement $chambre){
 
+        $chambre->imageLogement->delete();
+        $chambre->delete();
+    }
 }

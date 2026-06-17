@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pays', function (Blueprint $table) {
-            
-            $table->id();
-            $table->string('pays')->unique();
-            $table->timestamps();
+        Schema::table('services', function (Blueprint $table) {
+
+            $table->decimal('latitude', 10, 7)->nullable();
+            $table->decimal('longitude', 10, 7)->nullable();
+
         });
     }
 
@@ -24,6 +24,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pays');
+        Schema::table('services', function (Blueprint $table) {
+            //
+        });
     }
 };

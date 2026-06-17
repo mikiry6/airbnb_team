@@ -14,7 +14,7 @@ class AccountContrioller extends Controller
         $role =auth()->user()->role;
 
         if($role == 'simple'){
-            return Inertia::render('user/UserDash');
+            return Inertia::render('user/userSimple/UserSimpleProfil');
         }if($role == 'hotel'){
             return Inertia::render('user/userHotel/UserHotelDash');
         }if($role == 'prestataire'){

@@ -14,11 +14,18 @@ use Illuminate\Support\Facades\Route;
 Route::controller(ServiceController::class)
     ->group(function () {
 
+
+        Route::get(
+            '/prestataire/tableau-de-board',
+            'board'
+        );
+        
         // DASHBOARD
         Route::get(
             '/prestataire/dashboard',
             'dashboard'
         );
+        
 
         // CREATE
         Route::get(

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Pays::class)->constrained()->cascadeOnDelete()->nullable();
             $table->string('localisation');
+            $table->unique(['pays_id', 'localisation']);
             $table->timestamps();
         });
     }

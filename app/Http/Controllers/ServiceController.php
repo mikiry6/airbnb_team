@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Http;
 use App\Models\Pays;
 use App\Models\Service;
 use Illuminate\Http\Request;
@@ -11,11 +12,116 @@ use Inertia\Inertia;
 
 class ServiceController extends Controller
 {
+    public function create()
+    {
+        $pays = Pays::all();
+
+        return Inertia::render(
+            'user/userPrestataire/UserPrestataireCreate',
+            [
+                'pays' => $pays
+            ]
+        );
+    }
+
+    public function board()
+    {
+        $services = Service::with('pays')
+            ->latest()
+            ->get();
+
+        $totalServices = Service::count();
+
+        $totalCountries = Service::distinct('pays_id')
+            ->count('pays_id');
+
+        $servicesThisMonth = Service::whereMonth(
+            'created_at',
+            now()->month
+        )->count();
+
+        $lastService = Service::latest()->first();
+
+        return Inertia::render(
+            'user/userPrestataire/UserPrestataireBoard',
+            [
+                'services' => $services,
+                'totalServices' => $totalServices,
+                'totalCountries' => $totalCountries,
+                'servicesThisMonth' => $servicesThisMonth,
+                'lastService' => $lastService
+            ]
+        );
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => ['required'],
+            'description' => ['required'],
+            'country' => ['required'],
+            'image' => ['required', 'image']
+        ]);
+
+        $path = $request->file('image')
+            ->store('services', 'public');
+
+        $pays = Pays::findOrFail(
+            $request->country
+        );
+
+        $latitude = null;
+        $longitude = null;
+
+        $response = Http::withHeaders([
+            'User-Agent' => 'LaravelApp/1.0'
+        ])->get(
+            'https://nominatim.openstreetmap.org/search',
+            [
+                'q' => trim($pays->nom),
+                'format' => 'json',
+                'limit' => 1
+            ]
+        );
+
+        $geo = $response->json();
+
+        if (!empty($geo)) {
+
+            $latitude = $geo[0]['lat'];
+            $longitude = $geo[0]['lon'];
+        }
+
+        Service::create([
+
+            'title' => $request->title,
+
+            'description' => $request->description,
+
+            'pays_id' => $request->country,
+
+            'image' => $path,
+
+            'latitude' => $latitude,
+
+            'longitude' => $longitude,
+
+            'user_id' => Auth::id()
+
+        ]);
+
+        return redirect('/prestataire/dashboard')
+            ->with(
+                'success',
+                'Service ajouté avec succès'
+            );
+    }
 
     public function dashboard()
     {
-
-        $services = Service::latest()->get();
+        $services = Service::with('pays')
+            ->latest()
+            ->paginate(6);
 
         return Inertia::render(
             'user/userPrestataire/UserPrestataireDash',
@@ -23,46 +129,6 @@ class ServiceController extends Controller
                 'services' => $services
             ]
         );
-    }
-
-    public function create()
-    {
-        $pays = Pays::all();
-        return Inertia::render(
-            'user/userPrestataire/UserPrestataireCreate',[
-                'pays' => $pays
-            ]
-        );
-    }
-
-    public function store(Request $request)
-    {
-
-        $request->validate([
-
-            
-            'title' => ['required'],
-            'description' => ['required'],
-            'country' => ['required'],
-            'image' => ['required', 'image']
-        
-        ]);
-        // dd( $request->all());
-        $path = $request->file('image')
-            ->store('services', 'public');
-        // dd($request->country);
-        Service::create([
-
-            'pays_id'=> $request->country,
-            'title' => $request->title,
-            'description' => $request->description,
-            // 'country' => $request->country,
-            'image' => $path,
-            'user_id' => Auth::id()
-        ]);
-
-        return redirect('/prestataire/dashboard')
-            ->with('success', 'Service ajouté avec succès');
     }
 
     public function show(int $id)
