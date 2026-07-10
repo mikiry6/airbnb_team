@@ -9,6 +9,8 @@ import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { login } from '@/routes';
 import { store } from '@/routes/register';
+import Footer from '@/components/Layout/Footer.vue';
+import Navbar from '@/components/Layout/Navbar.vue';
 
 defineOptions({
     layout: {
@@ -18,52 +20,39 @@ defineOptions({
 </script>
 
 <template>
+
     <Head title="Register" />
 
-    <div class="min-h-screen flex items-center justify-center px-4 primary_color">
+    <div class="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-indigo-950 via-slate-900 to-cyan-950 bg-cover bg-center">
 
-        <!-- Card -->
-        <div class="w-full max-w-md bg-white/90 backdrop-blur-sm shadow-2xl rounded-3xl border border-slate-200 p-8">
+   
+        <div class="w-full max-w-xl bg-slate-950/40 backdrop-blur-xl shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] rounded-3xl border border-white/10 p-8 sm:p-10 relative overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-tr before:from-transparent before:via-white/5 before:to-transparent before:pointer-events-none">
 
-            <!-- Form -->
+        
             <Form
                 v-bind="store.form()"
                 :reset-on-success="['password', 'password_confirmation']"
                 v-slot="{ errors, processing }"
-                class="flex flex-col gap-6"
+                class="flex flex-col gap-6 relative z-10"
             >
 
-                <div class="text-center mb-6">
-                    <h1 class="text-3xl font-bold text-slate-800">
+            
+                <div class="text-center mb-2">
+                    <h1 class="text-3xl font-extrabold tracking-tight text-white bg-gradient-to-r from-white via-slate-200 to-cyan-200 bg-clip-text text-transparent">
                         Créer un compte
                     </h1>
-
-                    <p class="mt-2 text-sm text-slate-500">
+                    <p class="mt-2 text-sm text-slate-400 font-medium">
                         Rejoignez notre agence de réservation
                     </p>
                 </div>
 
-                <div class="grid gap-6">
+                <div class="grid gap-5">
 
-                    <!-- Name  and -- Email -->
-                    <div class="flex align-middle gap-2">
+                   
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         
                         <div class="grid gap-2">
-                            <Label for="email">Adresse email</Label>
-                            <Input
-                                id="email"
-                                type="email"
-                                required
-                                :tabindex="2"
-                                autocomplete="email"
-                                name="email"
-                                placeholder="email@example.com"
-                                class="h-12 rounded-xl border-slate-300 bg-slate-50 focus:border-blue-400 focus:ring-2 focus:ring-blue-200"
-                            />
-                            <InputError :message="errors.email" />
-                        </div>
-                        <div class="grid gap-2">
-                            <Label for="name">Nom complet</Label>
+                            <Label for="name" class="text-xs font-semibold uppercase tracking-wider text-slate-400">Nom complet</Label>
                             <Input
                                 id="name"
                                 type="text"
@@ -72,88 +61,106 @@ defineOptions({
                                 :tabindex="1"
                                 autocomplete="name"
                                 name="name"
-                                placeholder="Full name"
-                                class="h-12 rounded-xl border-slate-300 bg-slate-50 focus:border-blue-400 focus:ring-2 focus:ring-blue-200"
+                                placeholder="John Doe"
+                                class="h-12 rounded-xl border-white/10 bg-slate-900/50 text-white placeholder-slate-500 focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all duration-300"
                             />
                             <InputError :message="errors.name" />
+                        </div>
+
+                        <div class="grid gap-2">
+                            <Label for="email" class="text-xs font-semibold uppercase tracking-wider text-slate-400">Adresse email</Label>
+                            <Input
+                                id="email"
+                                type="email"
+                                required
+                                :tabindex="2"
+                                autocomplete="email"
+                                name="email"
+                                placeholder="nom@exemple.com"
+                                class="h-12 rounded-xl border-white/10 bg-slate-900/50 text-white placeholder-slate-500 focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all duration-300"
+                            />
+                            <InputError :message="errors.email" />
                         </div>
                         
                     </div>
 
-                    <!-- Role -->
+                  
                     <div class="grid gap-2">
-                        <Label for="role">Choisir Type</Label>
-                        <select
-                            id="role"
-                            required
-                            :tabindex="2"
-                            name="role"
-                            class="h-12 rounded-xl border-slate-300 bg-slate-50 focus:border-blue-400 focus:ring-2 focus:ring-blue-200"
-                        >
-                            <option value="simple">
-                                simple
-                            </option>
-                            <option value="hotel">
-                                hotel
-                            </option>
-                            <option value="prestataire">
-                                prestataire
-                            </option>
-                        </select>
+                        <Label for="role" class="text-xs font-semibold uppercase tracking-wider text-slate-400">Choisir Type</Label>
+                        <div class="relative">
+                            <select
+                                id="role"
+                                required
+                                :tabindex="3"
+                                name="role"
+                                class="w-full h-12 px-3 rounded-xl border border-white/10 bg-slate-900/50 text-slate-200 focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all duration-300 appearance-none outline-none"
+                            >
+                                <option value="simple" class="bg-slate-900 text-white">Simple</option>
+                                <option value="hotel" class="bg-slate-900 text-white">Hôtel</option>
+                                <option value="prestataire" class="bg-slate-900 text-white">Prestataire</option>
+                                <option value="particulier" class="bg-slate-900 text-white">Particulier</option>
+                            </select>
+              
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-slate-400">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </div>
+                        </div>
                         <InputError :message="errors.role" />
                     </div>
 
-                    <!-- Password -->
-                    <div class="grid gap-2">
-                        <Label for="password">Mot de passe</Label>
-                        <PasswordInput
-                            id="password"
-                            required
-                            :tabindex="3"
-                            autocomplete="new-password"
-                            name="password"
-                            placeholder="••••••••"
-                            class="h-12 rounded-xl border-slate-300 bg-slate-50 focus:border-blue-400 focus:ring-2 focus:ring-blue-200"
-                        />
-                        <InputError :message="errors.password" />
+                   
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        
+                        <div class="grid gap-2">
+                            <Label for="password" class="text-xs font-semibold uppercase tracking-wider text-slate-400">Mot de passe</Label>
+                            <PasswordInput
+                                id="password"
+                                required
+                                :tabindex="4"
+                                autocomplete="new-password"
+                                name="password"
+                                placeholder="••••••••"
+                                class="h-12 rounded-xl border-white/10 bg-slate-900/50 text-white placeholder-slate-500 focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all duration-300"
+                            />
+                            <InputError :message="errors.password" />
+                        </div>
+
+                        <div class="grid gap-2">
+                            <Label for="password_confirmation" class="text-xs font-semibold uppercase tracking-wider text-slate-400">Confirmation</Label>
+                            <PasswordInput
+                                id="password_confirmation"
+                                required
+                                :tabindex="5"
+                                autocomplete="new-password"
+                                name="password_confirmation"
+                                placeholder="••••••••"
+                                class="h-12 rounded-xl border-white/10 bg-slate-900/50 text-white placeholder-slate-500 focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 transition-all duration-300"
+                            />
+                            <InputError :message="errors.password_confirmation" />
+                        </div>
+                        
                     </div>
 
-                    <!-- Confirm password -->
-                    <div class="grid gap-2">
-                        <Label for="password_confirmation">Confirmation</Label>
-                        <PasswordInput
-                            id="password_confirmation"
-                            required
-                            :tabindex="4"
-                            autocomplete="new-password"
-                            name="password_confirmation"
-                            placeholder="••••••••"
-                            class="h-12 rounded-xl border-slate-300 bg-slate-50 focus:border-blue-400 focus:ring-2 focus:ring-blue-200"
-                        />
-                        <InputError :message="errors.password_confirmation" />
-                    </div>
-
-                    <!-- Submit -->
                     <Button
                         type="submit"
-                        class="mt-2 h-12 w-full rounded-xl bg-slate-700 text-white font-semibold shadow-lg hover:bg-slate-800 transition"
-                        tabindex="5"
+                        class="mt-4 h-12 w-full rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold tracking-wide shadow-[0_4px_20px_rgba(6,182,212,0.35)] hover:opacity-95 hover:shadow-[0_4px_25px_rgba(6,182,212,0.5)] active:scale-[0.98] transition-all duration-200"
+                        tabindex="6"
                         :disabled="processing"
                         data-test="register-user-button"
                     >
-                        <Spinner v-if="processing" class="mr-2" />
+                        <Spinner v-if="processing" class="mr-2 text-white" />
                         {{ processing ? 'Création...' : 'Créer un compte' }}
                     </Button>
 
                 </div>
 
-                <!-- Login link -->
-                <div class="text-center text-sm text-slate-500 mt-4">
+
+                <div class="text-center text-sm text-slate-400 mt-2">
                     Déjà un compte ?
                     <TextLink
                         :href="login()"
-                        class="text-blue-500 font-semibold hover:text-blue-600"
-                        :tabindex="6"
+                        class="text-cyan-400 font-bold hover:text-cyan-300 transition-colors ml-1"
+                        :tabindex="7"
                     >
                         Se connecter
                     </TextLink>
@@ -162,4 +169,5 @@ defineOptions({
             </Form>
         </div>
     </div>
+
 </template>

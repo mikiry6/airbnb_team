@@ -79,457 +79,608 @@
 
 </script>
 
+```vue
 <template>
 
-<div class="p-6  min-h-screen">
+<div
+    class="
+        min-h-screen
+        p-4
+        md:p-6
+        text-white
+        relative
+        overflow-hidden
+    "
+>
 
-    <!-- TITRE -->
+    <!-- BACKGROUND GLOW -->
 
-    <div class="mb-8">
+    <div class="absolute inset-0 pointer-events-none">
 
-        <h1 class="text-3xl font-bold text-slate-800">
-            Dashboard Hôtel
-        </h1>
+        <div
+            class="
+                absolute
+                top-0
+                left-0
+                w-[400px]
+                h-[400px]
+                bg-cyan-500/10
+                blur-[120px]
+                rounded-full
+            "
+        ></div>
 
-        <p class="text-slate-500 mt-2">
-            Vue d'ensemble de votre activité
-        </p>
+        <div
+            class="
+                absolute
+                bottom-0
+                right-0
+                w-[350px]
+                h-[350px]
+                bg-blue-600/10
+                blur-[120px]
+                rounded-full
+            "
+        ></div>
 
     </div>
 
-    <!-- STATS -->
-    <div
-        class="
-            grid
-            grid-cols-1
-            sm:grid-cols-2
-            lg:grid-cols-3
-            gap-6
-        "
-    >
-        <!-- nb hotels -->
+    <!-- CONTENT -->
 
-        <div
-            class="
-                bg-white
-                rounded-2xl
-                p-6
-                shadow-sm
-                border
-                border-slate-200
-            "
-        >
+    <div class="relative z-10">
 
-            <div class="flex justify-between items-center">
+        <!-- HEADER -->
 
-                <div>
+        <div class="mb-10">
 
-                    <p class="text-slate-500 text-3xl">
-                       🚀
-                    </p>
+            <h1
+                class="
+                    text-3xl
+                    md:text-5xl
+                    font-bold
+                    bg-gradient-to-r
+                    from-cyan-300
+                    to-blue-400
+                    bg-clip-text
+                    text-transparent
+                "
+            >
+                Dashboard Hôtel
+            </h1>
 
-                    <h2 class="text-3xl font-bold mt-2">
-                        Hotel
-                    </h2>
-
-                </div>
-
-                <span class="text-4xl">
-                    {{ nb_hotel}}
-                </span>
-
-            </div>
+            <p
+                class="
+                    text-slate-400
+                    mt-3
+                    text-sm
+                    md:text-base
+                "
+            >
+                Vue d’ensemble de votre activité
+            </p>
 
         </div>
 
-        <!-- nb chambres -->
+        <!-- STATS -->
 
         <div
             class="
-                bg-white
-                rounded-2xl
-                p-6
-                shadow-sm
-                border
-                border-slate-200
+                grid
+                grid-cols-1
+                sm:grid-cols-2
+                xl:grid-cols-3
+                gap-6
             "
         >
 
-            <div class="flex justify-between items-center">
-
-                <div>
-
-                    <p class="text-slate-500 text-3xl">
-                       🚀
-                    </p>
-
-                    <h2 class="text-3xl font-bold mt-2">
-                        Chambre
-                    </h2>
-
-                </div>
-
-                <span class="text-4xl">
-                    {{ nb_chambre }}
-                </span>
-
-            </div>
-
-        </div>
-
-        <!-- nb reservations en attente -->
-         <div
-            class="
-                bg-white
-                rounded-2xl
-                p-6
-                shadow-sm
-                border
-                border-slate-200
-            "
-        >
-
-            <div class="flex justify-between items-center">
-
-                <div>
-
-                    <p class="text-slate-500 text-3xl">
-                       🚀
-                    </p>
-
-                    <h2 class="text-3xl font-bold mt-2">
-                        Reservation
-                    </h2>
-
-                </div>
-
-                <span class="text-4xl">
-                    0
-                </span>
-
-            </div>
-
-        </div>
-
-    </div>
-        
-
-    <!-- REVENUS -->
-
-    <div
-        class="
-            mt-8
-            grid
-            grid-cols-1
-            xl:grid-cols-4
-            gap-6
-        "
-    >
-
-        <!-- GRAPHIQUE -->
-
-        <div
-            class="
-                xl:col-span-3
-                rounded-3xl
-                border
-                border-slate-600
-                bg-slate-700
-                shadow-2xl
-                p-8
-                text-white
-            "
-        >
-
-            <div class="flex justify-between items-center mb-8">
-
-                <div>
-
-                    <h2 class="text-xl font-semibold">
-                        Revenus mensuels
-                    </h2>
-
-                    <p class="text-slate-400 text-sm mt-1">
-                        Évolution du chiffre d'affaires
-                    </p>
-
-                </div>
-
-                <select
-                    v-model="selectedYear"
-                    class="
-                        bg-slate-800
-                        border
-                        border-slate-700
-                        rounded-xl
-                        px-4
-                        py-2
-                        text-sm
-                    "
-                >
-                    <option>2024</option>
-                    <option>2025</option>
-                    <option>2026</option>
-                </select>
-
-            </div>
+            <!-- CARD -->
 
             <div
                 class="
-                    h-80
-                    flex
-                    items-end
-                    justify-between
-                    gap-2
+                    group
+                    relative
+                    overflow-hidden
+                    rounded-3xl
+                    border
+                    border-white/10
+                    bg-white/5
+                    backdrop-blur-xl
+                    p-6
+                    transition-all
+                    duration-500
+                    hover:-translate-y-2
+                    hover:border-cyan-400/40
                 "
             >
 
                 <div
-                    v-for="(value,index) in revenus[selectedYear]"
-                    :key="index"
+                    class="
+                        absolute
+                        inset-0
+                        bg-gradient-to-br
+                        from-cyan-500/5
+                        to-transparent
+                        opacity-0
+                        group-hover:opacity-100
+                        transition-all
+                        duration-500
+                    "
+                ></div>
+
+                <div class="relative z-10 flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-4xl">
+                            🏨
+                        </p>
+
+                        <h2 class="text-2xl font-bold mt-3">
+                            Hôtels
+                        </h2>
+
+                    </div>
+
+                    <span
+                        class="
+                            text-5xl
+                            font-bold
+                            text-cyan-300
+                        "
+                    >
+                        {{ nb_hotel }}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- CARD -->
+
+            <div
+                class="
+                    group
+                    relative
+                    overflow-hidden
+                    rounded-3xl
+                    border
+                    border-white/10
+                    bg-white/5
+                    backdrop-blur-xl
+                    p-6
+                    transition-all
+                    duration-500
+                    hover:-translate-y-2
+                    hover:border-blue-400/40
+                "
+            >
+
+                <div class="relative z-10 flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-4xl">
+                            🛏️
+                        </p>
+
+                        <h2 class="text-2xl font-bold mt-3">
+                            Chambres
+                        </h2>
+
+                    </div>
+
+                    <span
+                        class="
+                            text-5xl
+                            font-bold
+                            text-blue-300
+                        "
+                    >
+                        {{ nb_chambre }}
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- CARD -->
+
+            <div
+                class="
+                    group
+                    relative
+                    overflow-hidden
+                    rounded-3xl
+                    border
+                    border-white/10
+                    bg-white/5
+                    backdrop-blur-xl
+                    p-6
+                    transition-all
+                    duration-500
+                    hover:-translate-y-2
+                    hover:border-purple-400/40
+                "
+            >
+
+                <div class="relative z-10 flex justify-between items-center">
+
+                    <div>
+
+                        <p class="text-4xl">
+                            📅
+                        </p>
+
+                        <h2 class="text-2xl font-bold mt-3">
+                            Réservations
+                        </h2>
+
+                    </div>
+
+                    <span
+                        class="
+                            text-5xl
+                            font-bold
+                            text-purple-300
+                        "
+                    >
+                        0
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- REVENUS -->
+
+        <div
+            class="
+                mt-10
+                grid
+                grid-cols-1
+                xl:grid-cols-4
+                gap-6
+            "
+        >
+
+            <!-- CHART -->
+
+            <div
+                class="
+                    xl:col-span-3
+                    rounded-3xl
+                    border
+                    border-white/10
+                    bg-white/5
+                    backdrop-blur-xl
+                    p-6
+                    md:p-8
+                    shadow-[0_0_50px_rgba(0,150,255,0.08)]
+                "
+            >
+
+                <div
                     class="
                         flex
                         flex-col
-                        items-center
-                        flex-1
+                        md:flex-row
+                        md:items-center
+                        md:justify-between
+                        gap-4
+                        mb-10
                     "
                 >
 
-                    <span
+                    <div>
+
+                        <h2 class="text-2xl font-bold">
+                            Revenus mensuels
+                        </h2>
+
+                        <p class="text-slate-400 mt-1">
+                            Évolution du chiffre d’affaires
+                        </p>
+
+                    </div>
+
+                    <select
+                        v-model="selectedYear"
                         class="
-                            text-xs
-                            text-slate-400
-                            mb-2
+                            bg-slate-900/80
+                            border
+                            border-white/10
+                            rounded-xl
+                            px-4
+                            py-3
+                            text-sm
+                            focus:outline-none
+                            focus:border-cyan-400/40
                         "
                     >
-                        {{ value }}€
-                    </span>
-
-                    <div
-                        class="
-                            w-3
-                            rounded-full
-                            bg-gradient-to-t
-                            from-blue-700
-                            via-blue-500
-                            to-cyan-300
-                            shadow-[0_0_18px_rgba(59,130,246,0.6)]
-                            transition-all
-                            duration-500
-                        "
-                        :style="{
-                            height: `${(value / maxValue) * 220}px`
-                        }"
-                    ></div>
-
-                    <span
-                        class="
-                            text-xs
-                            text-slate-500
-                            mt-3
-                        "
-                    >
-                        {{ mois[index] }}
-                    </span>
+                        <option>2024</option>
+                        <option>2025</option>
+                        <option>2026</option>
+                    </select>
 
                 </div>
 
-            </div>
-
-        </div>
-
-        <!-- CARTE REVENU -->
-
-        <div
-            class="
-                rounded-3xl
-                border
-                 border-slate-600
-                bg-slate-700
-                shadow-2xl
-                p-6
-                text-white
-                flex
-                flex-col
-                justify-between
-                min-h-[430px]
-            "
-        >
-
-            <div>
-
-                <span
-                    class="
-                        text-slate-400
-                        text-sm
-                        uppercase
-                        tracking-wider
-                    "
-                >
-                    Revenu du mois
-                </span>
-
-                <h2
-                    class="
-                        text-5xl
-                        font-bold
-                        mt-4
-                    "
-                >
-                    {{ currentMonthRevenue }} €
-                </h2>
+                <!-- BAR CHART -->
 
                 <div
                     class="
-                        mt-4
-                        inline-flex
-                        items-center
-                        px-3
-                        py-1
-                        rounded-full
-                        bg-green-500/20
-                        text-green-400
-                        text-sm
+                        h-80
+                        flex
+                        items-end
+                        justify-between
+                        gap-2
                     "
                 >
-                    +12% vs mois précédent
-                </div>
 
-                <p
-                    class="
-                        text-slate-400
-                        mt-4
-                    "
-                >
-                    Mois actuel
-                </p>
-
-            </div>
-
-            <div
-                class="
-                    border-t
-                    border-slate-700
-                    pt-6
-                "
-            >
-
-                <span
-                    class="
-                        text-slate-400
-                        text-sm
-                    "
-                >
-                    Total {{ selectedYear }}
-                </span>
-
-                <h3
-                    class="
-                        text-3xl
-                        font-bold
-                        mt-2
-                        text-cyan-400
-                    "
-                >
-                    {{ yearlyRevenue }} €
-                </h3>
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- DERNIERES RESERVATIONS -->
-
-    <div
-        class="
-            mt-8
-            bg-white
-            rounded-2xl
-            border
-            border-slate-200
-            shadow-sm
-            overflow-hidden
-        "
-    >
-
-        <div class="p-6 border-b">
-
-            <h2 class="font-semibold text-lg">
-                Dernières réservations
-            </h2>
-
-        </div>
-
-        <table class="w-full">
-
-            <thead class="bg-slate-50">
-
-                <tr>
-
-                    <th class="text-left p-4">
-                        Client
-                    </th>
-
-                    <th class="text-left p-4">
-                        Chambre
-                    </th>
-
-                    <th class="text-left p-4">
-                        Date
-                    </th>
-
-                    <th class="text-left p-4">
-                        Statut
-                    </th>
-
-                </tr>
-
-            </thead>
-
-            <tbody>
-
-                <tr
-                    v-for="reservation in reservations"
-                    :key="reservation.client"
-                    class="border-t"
-                >
-
-                    <td class="p-4">
-                        {{ reservation.client }}
-                    </td>
-
-                    <td class="p-4">
-                        {{ reservation.chambre }}
-                    </td>
-
-                    <td class="p-4">
-                        {{ reservation.date }}
-                    </td>
-
-                    <td class="p-4">
+                    <div
+                        v-for="(value,index) in revenus[selectedYear]"
+                        :key="index"
+                        class="
+                            flex
+                            flex-col
+                            items-center
+                            flex-1
+                        "
+                    >
 
                         <span
                             class="
-                                px-3
-                                py-1
-                                rounded-full
-                                text-sm
-                                bg-green-100
-                                text-green-700
+                                text-xs
+                                text-slate-400
+                                mb-3
                             "
                         >
-                            {{ reservation.statut }}
+                            {{ value }}€
                         </span>
 
-                    </td>
+                        <div
+                            class="
+                                w-full
+                                max-w-[18px]
+                                rounded-full
+                                bg-gradient-to-t
+                                from-blue-700
+                                via-cyan-500
+                                to-cyan-200
+                                shadow-[0_0_20px_rgba(34,211,238,0.6)]
+                                transition-all
+                                duration-500
+                                hover:scale-105
+                            "
+                            :style="{
+                                height: `${(value / maxValue) * 220}px`
+                            }"
+                        ></div>
 
-                </tr>
+                        <span
+                            class="
+                                text-xs
+                                text-slate-500
+                                mt-3
+                            "
+                        >
+                            {{ mois[index] }}
+                        </span>
 
-            </tbody>
+                    </div>
 
-        </table>
+                </div>
+
+            </div>
+
+            <!-- REVENU CARD -->
+
+            <div
+                class="
+                    rounded-3xl
+                    border
+                    border-white/10
+                    bg-white/5
+                    backdrop-blur-xl
+                    p-6
+                    shadow-[0_0_50px_rgba(0,150,255,0.08)]
+                    flex
+                    flex-col
+                    justify-between
+                "
+            >
+
+                <div>
+
+                    <span
+                        class="
+                            text-slate-400
+                            uppercase
+                            tracking-widest
+                            text-xs
+                        "
+                    >
+                        Revenu du mois
+                    </span>
+
+                    <h2
+                        class="
+                            text-5xl
+                            font-bold
+                            mt-5
+                            text-cyan-300
+                        "
+                    >
+                        {{ currentMonthRevenue }} €
+                    </h2>
+
+                    <div
+                        class="
+                            mt-5
+                            inline-flex
+                            items-center
+                            px-4
+                            py-2
+                            rounded-full
+                            bg-green-500/10
+                            border
+                            border-green-400/20
+                            text-green-300
+                            text-sm
+                        "
+                    >
+                        +12% vs mois précédent
+                    </div>
+
+                </div>
+
+                <div
+                    class="
+                        mt-10
+                        pt-6
+                        border-t
+                        border-white/10
+                    "
+                >
+
+                    <span class="text-slate-400 text-sm">
+                        Total {{ selectedYear }}
+                    </span>
+
+                    <h3
+                        class="
+                            text-4xl
+                            font-bold
+                            mt-3
+                            text-blue-300
+                        "
+                    >
+                        {{ yearlyRevenue }} €
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- TABLE -->
+
+        <div
+            class="
+                mt-10
+                rounded-3xl
+                border
+                border-white/10
+                bg-white/5
+                backdrop-blur-xl
+                overflow-hidden
+                shadow-[0_0_50px_rgba(0,150,255,0.08)]
+            "
+        >
+
+            <div
+                class="
+                    px-6
+                    py-5
+                    border-b
+                    border-white/10
+                "
+            >
+
+                <h2 class="text-2xl font-bold">
+                    Dernières réservations
+                </h2>
+
+            </div>
+
+            <div class="overflow-x-auto">
+
+                <table class="w-full min-w-[700px]">
+
+                    <thead
+                        class="
+                            bg-white/5
+                            text-slate-300
+                        "
+                    >
+
+                        <tr>
+
+                            <th class="text-left p-5">
+                                Client
+                            </th>
+
+                            <th class="text-left p-5">
+                                Chambre
+                            </th>
+
+                            <th class="text-left p-5">
+                                Date
+                            </th>
+
+                            <th class="text-left p-5">
+                                Statut
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        <tr
+                            v-for="reservation in reservations"
+                            :key="reservation.client"
+                            class="
+                                border-t
+                                border-white/5
+                                hover:bg-white/5
+                                transition-all
+                            "
+                        >
+
+                            <td class="p-5">
+                                {{ reservation.client }}
+                            </td>
+
+                            <td class="p-5 text-slate-300">
+                                {{ reservation.chambre }}
+                            </td>
+
+                            <td class="p-5 text-slate-400">
+                                {{ reservation.date }}
+                            </td>
+
+                            <td class="p-5">
+
+                                <span
+                                    class="
+                                        px-4
+                                        py-2
+                                        rounded-full
+                                        text-sm
+                                        bg-green-500/10
+                                        border
+                                        border-green-400/20
+                                        text-green-300
+                                    "
+                                >
+                                    {{ reservation.statut }}
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
 
     </div>
 

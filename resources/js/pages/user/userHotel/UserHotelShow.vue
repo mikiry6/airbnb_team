@@ -54,182 +54,178 @@
 
 <template>
 
-<div class="space-y-6">
+    <div class="space-y-6 text-white relative">
 
-    <!-- HEADER -->
-    <div class="bg-white rounded-2xl shadow-sm border p-6">
+        <div class="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-6 shadow-[0_8px_32px_0_rgba(0,149,255,0.05)]">
 
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-
-            <div>
-                <h1 class="text-3xl font-bold text-gray-800">
-                    {{ hotel.nom }}
-                </h1>
-
-                <p class="text-gray-500 mt-1">
-                    Gestion du logement
-                </p>
-            </div>
-
-            <div class="space-x-5">
-
-                <Link
-                :href="`/user/hotel/${hotel.id}/chambre/create`"
-                class=" inline-flex items-center justify-center px-5 py-3 rounded-xl bg-[#36465c] text-white font-medium hover:bg-[#2c394b] transition cursor-pointer"
-                >
-                    + Ajouter une chambre
-                </Link>
-
-                <Link
-                    :href="`/user/hotel/${hotel.id}/chambre/liste`"
-                    class=" cursor-poinnter inline-flex items-center justify-center px-5 py-3 rounded-xl bg-[#0d65e1] text-white font-medium hover:bg-[#166fec] transition cursor-pointer"
-                >
-                    Voir liste
-                </Link>
-
-            </div>
-
-
-        </div>
-
-        <!-- STATS -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-
-            <div class="bg-blue-50 border border-blue-100 rounded-xl p-4">
-                <p class="text-sm text-gray-500">
-                    Total chambres
-                </p>
-
-                <h2 class="text-3xl font-bold text-blue-600">
-                    {{ hotel.chambres.length  }}
-                </h2>
-            </div>
-
-            <div class="bg-green-50 border border-green-100 rounded-xl p-4">
-                <p class="text-sm text-gray-500">
-                    Chambres disponibles
-                </p>
-
-                <h2 class="text-3xl font-bold text-green-600">
-                    {{ nb_chambre_free }}
-                </h2>
-            </div>
-
-            <div class="bg-red-50 border border-red-100 rounded-xl p-4">
-                <p class="text-sm text-gray-500">
-                    Chambres occupées
-                </p>
-
-                <h2 class="text-3xl font-bold text-red-600">
-                    {{ nb_chambre_occupied }}
-                </h2>
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- GALERIE -->
-    <div class="bg-white rounded-2xl shadow-sm border p-4">
-
-        <h2 class="text-xl font-semibold mb-4">
-            Galerie
-        </h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-
-            <img
-                :src="hotel.image_principale"
-                class="h-64 w-full object-cover rounded-xl shadow hover:scale-[1.02] transition"
-            >
-
-            <img
-                :src="hotel.image_1"
-                class="h-64 w-full object-cover rounded-xl shadow hover:scale-[1.02] transition"
-            >
-
-            <img
-                :src="hotel.image_2"
-                class="h-64 w-full object-cover rounded-xl shadow hover:scale-[1.02] transition"
-            >
-
-        </div>
-
-    </div>
-
-    <!-- DESCRIPTION -->
-    <div class="bg-white rounded-2xl shadow-sm border p-6">
-
-        <h2 class="text-xl font-semibold mb-3">
-            Description
-        </h2>
-
-        <p class="text-gray-600 leading-relaxed">
-            {{ hotel.description }}
-        </p>
-
-    </div>
-
-    <!-- LOCALISATION -->
-    <div class="bg-white rounded-2xl shadow-sm border p-6">
-
-        <h2 class="text-xl font-semibold mb-4">
-            Localisation
-        </h2>
-
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-            <div
-                id="map"
-                class="w-full h-[350px] rounded-2xl overflow-hidden border"
-            ></div>
-
-            <div class="space-y-4">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
 
                 <div>
-                    <label class="block mb-2 text-sm font-medium text-gray-700">
-                        Localisation
-                    </label>
+                    <h1 class="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                        {{ hotel.nom }}
+                    </h1>
 
-                    <input
-                        :value="hotel.localisation.localisation"
-                        readonly
-                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3"
-                    >
+                    <p class="text-slate-400 mt-1 text-sm">
+                        Gestion du logement
+                    </p>
                 </div>
 
-                <div>
-                    <label class="block mb-2 text-sm font-medium text-gray-700">
-                        Pays
-                    </label>
+                <div class="flex flex-wrap items-center gap-4">
 
-                    <input
-                        :value="hotel.pays.pays"
-                        readonly
-                        class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3"
+                    <Link
+                        :href="`/user/hotel/${hotel.id}/chambre/create`"
+                        class="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-medium hover:bg-cyan-500/20 hover:border-cyan-500/30 hover:shadow-[0_0_15px_rgba(34,211,238,0.2)] transition duration-300 cursor-pointer"
                     >
+                        + Ajouter une chambre
+                    </Link>
+
+                    <Link
+                        :href="`/user/hotel/${hotel.id}/chambre/liste`"
+                        class="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-blue-600/60 border border-blue-500/30 text-white font-medium hover:bg-blue-500/80 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition duration-300 cursor-pointer"
+                    >
+                        Voir liste
+                    </Link>
+
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
+            </div>
 
-                    <div class="bg-gray-50 rounded-xl p-4">
-                        <p class="text-sm text-gray-500">
-                            Latitude
-                        </p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
 
-                        <p class="font-semibold">
-                            {{ hotel.latitude }}
-                        </p>
+                <div class="backdrop-blur-md bg-blue-500/5 border border-blue-500/20 rounded-xl p-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
+                    <p class="text-sm text-slate-400">
+                        Total chambres
+                    </p>
+
+                    <h2 class="text-3xl font-bold text-blue-400 mt-1 drop-shadow-[0_0_10px_rgba(96,165,250,0.3)]">
+                        {{ hotel.chambres.length }}
+                    </h2>
+                </div>
+
+                <div class="backdrop-blur-md bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
+                    <p class="text-sm text-slate-400">
+                        Chambres disponibles
+                    </p>
+
+                    <h2 class="text-3xl font-bold text-emerald-400 mt-1 drop-shadow-[0_0_10px_rgba(52,211,153,0.3)]">
+                        {{ nb_chambre_free }}
+                    </h2>
+                </div>
+
+                <div class="backdrop-blur-md bg-rose-500/5 border border-rose-500/20 rounded-xl p-4 shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]">
+                    <p class="text-sm text-slate-400">
+                        Chambres occupées
+                    </p>
+
+                    <h2 class="text-3xl font-bold text-rose-400 mt-1 drop-shadow-[0_0_10px_rgba(251,113,133,0.3)]">
+                        {{ nb_chambre_occupied }}
+                    </h2>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-4 shadow-[0_8px_32px_0_rgba(0,149,255,0.05)]">
+
+            <h2 class="text-xl font-semibold mb-4 text-slate-200">
+                Galerie
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+                <img
+                    :src="hotel.image_principale"
+                    class="h-64 w-full object-cover rounded-xl border border-white/10 shadow-lg hover:scale-[1.02] hover:border-cyan-500/40 transition-all duration-300"
+                >
+
+                <img
+                    :src="hotel.image_1"
+                    class="h-64 w-full object-cover rounded-xl border border-white/10 shadow-lg hover:scale-[1.02] hover:border-cyan-500/40 transition-all duration-300"
+                >
+
+                <img
+                    :src="hotel.image_2"
+                    class="h-64 w-full object-cover rounded-xl border border-white/10 shadow-lg hover:scale-[1.02] hover:border-cyan-500/40 transition-all duration-300"
+                >
+
+            </div>
+
+        </div>
+
+        <div class="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-6 shadow-[0_8px_32px_0_rgba(0,149,255,0.05)]">
+
+            <h2 class="text-xl font-semibold mb-3 text-slate-200">
+                Description
+            </h2>
+
+            <p class="text-slate-300 leading-relaxed">
+                {{ hotel.description }}
+            </p>
+
+        </div>
+
+        <div class="backdrop-blur-xl bg-white/5 border border-white/10 rounded-2xl p-6 shadow-[0_8px_32px_0_rgba(0,149,255,0.05)]">
+
+            <h2 class="text-xl font-semibold mb-4 text-slate-200">
+                Localisation
+            </h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                <div
+                    id="map"
+                    class="w-full h-[350px] rounded-2xl overflow-hidden border border-white/10 bg-slate-900/40 balance"
+                ></div>
+
+                <div class="space-y-4">
+
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-slate-400">
+                            Localisation
+                        </label>
+
+                        <input
+                            :value="hotel.localisation.localisation"
+                            readonly
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none"
+                        >
                     </div>
 
-                    <div class="bg-gray-50 rounded-xl p-4">
-                        <p class="text-sm text-gray-500">
-                            Longitude
-                        </p>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-slate-400">
+                            Pays
+                        </label>
 
-                        <p class="font-semibold">
-                            {{ hotel.longitude }}
-                        </p>
+                        <input
+                            :value="hotel.pays.pays"
+                            readonly
+                            class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none"
+                        >
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+
+                        <div class="bg-white/5 border border-white/5 rounded-xl p-4">
+                            <p class="text-sm text-slate-400">
+                                Latitude
+                            </p>
+
+                            <p class="font-semibold text-slate-200 mt-1">
+                                {{ hotel.latitude }}
+                            </p>
+                        </div>
+
+                        <div class="bg-white/5 border border-white/5 rounded-xl p-4">
+                            <p class="text-sm text-slate-400">
+                                Longitude
+                            </p>
+
+                            <p class="font-semibold text-slate-200 mt-1">
+                                {{ hotel.longitude }}
+                            </p>
+                        </div>
+
                     </div>
 
                 </div>
@@ -239,7 +235,5 @@
         </div>
 
     </div>
-
-</div>
-
+    
 </template>

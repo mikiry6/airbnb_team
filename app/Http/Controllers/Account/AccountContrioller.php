@@ -23,7 +23,7 @@ class AccountContrioller extends Controller
             $hotels = Hotel::all();
             $user_id = Auth::id();
             $chambres = Logement::where('user_id', "$user_id")->get();
-            // dd($chambres);
+            
             return Inertia::render('user/userHotel/UserHotelDash',[
                 
                 'hotels'=>$hotels,
@@ -32,6 +32,9 @@ class AccountContrioller extends Controller
             ]);
         }if($role == 'prestataire'){
             return Inertia::render('user/userPrestataire/UserPrestataireDash');
+        }
+        if($role == 'particulier'){
+            return Inertia::render('user/UserParticulier/UserParticulierStats');
         }
         
     }

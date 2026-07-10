@@ -22,92 +22,307 @@ const passwordInput = useTemplateRef('passwordInput');
 </script>
 
 <template>
+
     <div class="space-y-6">
+
         <Heading
             variant="small"
-            title="Delete account"
-            description="Delete your account and all of its resources"
+            title="Supprimer le compte"
+            description="Supprime définitivement votre compte et toutes vos données"
         />
+
         <div
-            class="space-y-4 rounded-lg border border-red-100 bg-red-50 p-4 dark:border-red-200/10 dark:bg-red-700/10"
+            class="
+                relative
+                overflow-hidden
+                rounded-3xl
+                border
+                border-red-400/20
+                bg-red-500/5
+                backdrop-blur-2xl
+                p-6
+                shadow-[0_0_40px_rgba(239,68,68,0.08)]
+            "
         >
-            <div class="relative space-y-0.5 text-red-600 dark:text-red-100">
-                <p class="font-medium">Warning</p>
-                <p class="text-sm">
-                    Please proceed with caution, this cannot be undone.
-                </p>
-            </div>
-            <Dialog>
-                <DialogTrigger as-child>
-                    <Button variant="destructive" data-test="delete-user-button"
-                        >Delete account</Button
-                    >
-                </DialogTrigger>
-                <DialogContent>
-                    <Form
-                        v-bind="ProfileController.destroy.form()"
-                        reset-on-success
-                        @error="() => passwordInput?.focus()"
-                        :options="{
-                            preserveScroll: true,
-                        }"
-                        class="space-y-6"
-                        v-slot="{ errors, processing, reset, clearErrors }"
-                    >
-                        <DialogHeader class="space-y-3">
-                            <DialogTitle
-                                >Are you sure you want to delete your
-                                account?</DialogTitle
-                            >
-                            <DialogDescription>
-                                Once your account is deleted, all of its
-                                resources and data will also be permanently
-                                deleted. Please enter your password to confirm
-                                you would like to permanently delete your
-                                account.
-                            </DialogDescription>
-                        </DialogHeader>
 
-                        <div class="grid gap-2">
-                            <Label for="password" class="sr-only"
-                                >Password</Label
-                            >
-                            <PasswordInput
-                                id="password"
-                                name="password"
-                                ref="passwordInput"
-                                placeholder="Password"
-                            />
-                            <InputError :message="errors.password" />
-                        </div>
+            <!-- Glow -->
+            <div
+                class="
+                    absolute
+                    -top-20
+                    -right-20
+                    w-52
+                    h-52
+                    bg-red-500/10
+                    blur-[100px]
+                    rounded-full
+                    pointer-events-none
+                "
+            ></div>
 
-                        <DialogFooter class="gap-2">
-                            <DialogClose as-child>
-                                <Button
-                                    variant="secondary"
-                                    @click="
-                                        () => {
-                                            clearErrors();
-                                            reset();
-                                        }
-                                    "
-                                >
-                                    Cancel
-                                </Button>
-                            </DialogClose>
+            <div class="relative z-10">
+
+                <!-- Warning -->
+                <div
+                    class="
+                        flex
+                        items-start
+                        gap-4
+                        rounded-2xl
+                        border
+                        border-red-400/10
+                        bg-white/5
+                        p-5
+                        backdrop-blur-xl
+                    "
+                >
+
+                    <div
+                        class="
+                            flex
+                            items-center
+                            justify-center
+                            w-14
+                            h-14
+                            rounded-2xl
+                            bg-red-500/15
+                            text-3xl
+                            shrink-0
+                        "
+                    >
+                        ⚠️
+                    </div>
+
+                    <div>
+
+                        <h3
+                            class="
+                                text-lg
+                                font-semibold
+                                text-red-300
+                            "
+                        >
+                            Attention
+                        </h3>
+
+                        <p
+                            class="
+                                mt-2
+                                text-sm
+                                leading-relaxed
+                                text-slate-300
+                            "
+                        >
+                            Cette action est irréversible.
+                            Toutes vos données,
+                            logements,
+                            réservations
+                            et informations associées
+                            seront supprimés définitivement.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <!-- Button -->
+                <div class="mt-6">
+
+                    <Dialog>
+
+                        <DialogTrigger as-child>
 
                             <Button
-                                type="submit"
                                 variant="destructive"
-                                :disabled="processing"
-                                data-test="confirm-delete-user-button"
+                                data-test="delete-user-button"
+                                class="
+                                    rounded-2xl
+                                    px-6
+                                    py-6
+                                    text-sm
+                                    font-semibold
+                                    bg-gradient-to-r
+                                    from-red-500
+                                    to-red-600
+                                    hover:from-red-400
+                                    hover:to-red-500
+                                    shadow-[0_0_25px_rgba(239,68,68,0.35)]
+                                    transition-all
+                                    duration-300
+                                "
                             >
-                                Delete account
+                                Supprimer mon compte
                             </Button>
-                        </DialogFooter>
-                    </Form>
-                </DialogContent>
-            </Dialog>
+
+                        </DialogTrigger>
+
+                        <!-- MODAL -->
+                        <DialogContent
+                            class="
+                                border
+                                border-white/10
+                                bg-slate-950/95
+                                backdrop-blur-2xl
+                                text-white
+                                rounded-3xl
+                                shadow-[0_0_60px_rgba(0,0,0,0.6)]
+                            "
+                        >
+
+                            <Form
+                                v-bind="ProfileController.destroy.form()"
+                                reset-on-success
+                                @error="() => passwordInput?.focus()"
+                                :options="{
+                                    preserveScroll: true,
+                                }"
+                                class="space-y-6"
+                                v-slot="{ errors, processing, reset, clearErrors }"
+                            >
+
+                                <DialogHeader class="space-y-4">
+
+                                    <div
+                                        class="
+                                            flex
+                                            items-center
+                                            justify-center
+                                            w-20
+                                            h-20
+                                            rounded-full
+                                            bg-red-500/10
+                                            mx-auto
+                                            text-5xl
+                                        "
+                                    >
+                                        🗑️
+                                    </div>
+
+                                    <DialogTitle
+                                        class="
+                                            text-center
+                                            text-2xl
+                                            font-bold
+                                            text-white
+                                        "
+                                    >
+                                        Confirmer la suppression
+                                    </DialogTitle>
+
+                                    <DialogDescription
+                                        class="
+                                            text-center
+                                            text-slate-400
+                                            leading-relaxed
+                                        "
+                                    >
+                                        Une fois votre compte supprimé,
+                                        toutes vos données seront définitivement perdues.
+                                        Veuillez entrer votre mot de passe
+                                        pour confirmer cette action.
+                                    </DialogDescription>
+
+                                </DialogHeader>
+
+                                <!-- PASSWORD -->
+                                <div class="grid gap-3">
+
+                                    <Label
+                                        for="password"
+                                        class="text-slate-300"
+                                    >
+                                        Mot de passe
+                                    </Label>
+
+                                    <PasswordInput
+                                        id="password"
+                                        name="password"
+                                        ref="passwordInput"
+                                        placeholder="Votre mot de passe"
+                                        class="
+                                            h-12
+                                            rounded-2xl
+                                            border
+                                            border-white/10
+                                            bg-white/5
+                                            text-white
+                                            placeholder:text-slate-500
+                                            focus:border-red-400/40
+                                            focus:ring-red-500/20
+                                        "
+                                    />
+
+                                    <InputError
+                                        :message="errors.password"
+                                    />
+
+                                </div>
+
+                                <!-- ACTIONS -->
+                                <DialogFooter
+                                    class="
+                                        gap-3
+                                        pt-4
+                                    "
+                                >
+
+                                    <DialogClose as-child>
+
+                                        <Button
+                                            variant="secondary"
+                                            class="
+                                                rounded-2xl
+                                                bg-white/5
+                                                border
+                                                border-white/10
+                                                text-slate-300
+                                                hover:bg-white/10
+                                            "
+                                            @click="
+                                                () => {
+                                                    clearErrors();
+                                                    reset();
+                                                }
+                                            "
+                                        >
+                                            Annuler
+                                        </Button>
+
+                                    </DialogClose>
+
+                                    <Button
+                                        type="submit"
+                                        variant="destructive"
+                                        :disabled="processing"
+                                        data-test="confirm-delete-user-button"
+                                        class="
+                                            rounded-2xl
+                                            bg-gradient-to-r
+                                            from-red-500
+                                            to-red-600
+                                            hover:from-red-400
+                                            hover:to-red-500
+                                            shadow-[0_0_20px_rgba(239,68,68,0.4)]
+                                        "
+                                    >
+                                        Supprimer définitivement
+                                    </Button>
+
+                                </DialogFooter>
+
+                            </Form>
+
+                        </DialogContent>
+
+                    </Dialog>
+
+                </div>
+
+            </div>
+
         </div>
+
     </div>
+
 </template>
+

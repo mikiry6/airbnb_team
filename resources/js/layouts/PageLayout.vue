@@ -4,7 +4,7 @@
 </script>
 
 <template>
-    <main>
+    <main class="bg-[#0d1132]" >
         <slot/>
     </main>
 </template>

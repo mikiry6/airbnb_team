@@ -7,8 +7,7 @@ use App\Models\Logement;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-
-class LogementController extends Controller
+class HotelChambreLogementController extends Controller
 {
     public function index()
     {
@@ -55,6 +54,25 @@ class LogementController extends Controller
         return Inertia::render('Hotel_detail',[
 
             'hotel'=>$hotel->load('chambres','localisation','pays')
+        ]);
+    }
+
+    public function liste_chambre($id){
+
+        // dd('hoho');
+        $chambres = Logement::where('hotel_id',"$id")->get();
+        // dd($chambres);
+        return Inertia::render('Chambre_liste',[
+
+            'chambres'=>$chambres
+        ]);
+
+    }
+
+    public function detail_chambre(Logement $chambre){
+
+        return Inertia::render('Chambre_detail',[
+
         ]);
     }
 }

@@ -4,6 +4,7 @@
     import { useForm } from '@inertiajs/vue3';
     import { onMounted } from 'vue';
     import { defineProps } from 'vue';
+    import { ref } from 'vue'
 
     const page = usePage();
     const user = page.props.auth.user;
@@ -31,6 +32,37 @@
       image_3:null
   })
 
+  // -----------------Preview Image
+  const previews = ref([
+  null,
+  null,
+  null,
+  null
+])
+
+const imageFields = [
+  'image_principale',
+  'image_1',
+  'image_2',
+  'image_3'
+]
+
+const handleImageChange = (event, index) => {
+
+  const file = event.target.files[0]
+
+  if (!file) return
+
+  // stockage dans inertia form
+  form[imageFields[index]] = file
+
+  // preview image
+  previews.value[index] = URL.createObjectURL(file)
+}
+
+
+
+  // ----------------------------
   const handleSubmit = ()=>{
 
 
@@ -49,193 +81,603 @@
 
 <template>
 
-      <div class="w-full max-w-4xl bg-white rounded-2xl shadow-xl m-auto overflow-hidden">
-        
-        <!-- HEADER -->
-        <div class="primary_color p-6">
-          <h1 class="text-3xl font-bold text-white">
-            Création Chambre 
-          </h1>
-          <p class="text-gray-200 mt-2">
-            Ajouter une Chambre  à la plateforme
-          </p>
+  <div
+    class="
+      relative
+      overflow-hidden
+      rounded-[32px]
+      border
+      border-white/10
+      bg-white/5
+      backdrop-blur-2xl
+      shadow-[0_0_50px_rgba(0,0,0,0.35)]
+    "
+  >
+
+    <!-- BACKGROUND EFFECT -->
+
+    <div class="absolute inset-0 pointer-events-none">
+
+      <div
+        class="
+          absolute
+          -top-24
+          -right-20
+          w-[320px]
+          h-[320px]
+          rounded-full
+          bg-cyan-500/10
+          blur-[120px]
+        "
+      ></div>
+
+      <div
+        class="
+          absolute
+          bottom-0
+          left-0
+          w-[260px]
+          h-[260px]
+          rounded-full
+          bg-blue-700/10
+          blur-[120px]
+        "
+      ></div>
+
+    </div>
+
+    <!-- HEADER -->
+
+    <div
+      class="
+        relative
+        z-10
+        border-b
+        border-white/10
+        bg-white/5
+        px-6
+        py-6
+        md:px-8
+      "
+    >
+
+      <h1
+        class="
+          text-3xl
+          font-bold
+          text-white
+        "
+      >
+        Création Chambre
+      </h1>
+
+      <p
+        class="
+          mt-2
+          text-slate-300
+        "
+      >
+        Ajouter un nouveau logement à la plateforme
+      </p>
+
+    </div>
+
+    <!-- FORM -->
+
+    <form
+      class="
+        relative
+        z-10
+        space-y-8
+        p-6
+        md:p-8
+      "
+      @submit.prevent="handleSubmit"
+      enctype="multipart/form-data"
+    >
+
+      <!-- TYPE LOGEMENT -->
+
+      <div>
+
+        <label
+          class="
+            mb-3
+            block
+            font-medium
+            text-slate-200
+          "
+        >
+          Type de logement
+        </label>
+
+        <select
+          v-model="form.type_logement"
+          name="type_logement"
+          class="
+            w-full
+            rounded-2xl
+            border
+            border-white/10
+            bg-white/5
+            px-5
+            py-4
+            text-white
+            backdrop-blur-lg
+            transition-all
+            duration-300
+            focus:border-cyan-400/40
+            focus:bg-white/10
+            focus:outline-none
+            focus:ring-2
+            focus:ring-cyan-400/20
+          "
+        >
+          <option class="bg-slate-900" value="cabane">Cabane</option>
+          <option class="bg-slate-900" value="chambre">Chambre</option>
+          <option class="bg-slate-900" value="appartement">Appartement</option>
+          <option class="bg-slate-900" value="bungalow">Bungalow</option>
+          <option class="bg-slate-900" value="villa">Villa</option>
+          <option class="bg-slate-900" value="autre">Autre</option>
+        </select>
+
+      </div>
+
+      <!-- TITRE -->
+
+      <div>
+
+        <label
+          class="
+            mb-3
+            block
+            font-medium
+            text-slate-200
+          "
+        >
+          Titre
+        </label>
+
+        <input
+          name="titre"
+          v-model="form.titre"
+          type="text"
+          placeholder="Ex: Appartement moderne à Ivandry"
+          class="
+            w-full
+            rounded-2xl
+            border
+            border-white/10
+            bg-white/5
+            px-5
+            py-4
+            text-white
+            placeholder:text-slate-400
+            backdrop-blur-lg
+            transition-all
+            duration-300
+            focus:border-cyan-400/40
+            focus:bg-white/10
+            focus:outline-none
+            focus:ring-2
+            focus:ring-cyan-400/20
+          "
+        />
+
+      </div>
+
+       <!-- IMAGES -->
+
+        <div>
+
+          <label>Images du logement</label>
+
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+
+              <label
+                v-for="(label,index) in [
+                  'Image principale',
+                  'Image secondaire',
+                  'Galerie 1',
+                  'Galerie 2'
+                ]"
+                :key="index"
+                class="
+                  group
+                  relative
+                  flex
+                  h-52
+                  cursor-pointer
+                  flex-col
+                  items-center
+                  justify-center
+                  overflow-hidden
+                  rounded-2xl
+                  border
+                  border-dashed
+                  border-white/15
+                  bg-white/5
+                  transition-all
+                  duration-300
+                  hover:border-cyan-400/40
+                  hover:bg-white/10
+                "
+              >
+
+                <!-- PREVIEW IMAGE -->
+
+                <img
+                  v-if="previews[index]"
+                  :src="previews[index]"
+                  class="
+                    absolute
+                    inset-0
+                    h-full
+                    w-full
+                    object-cover
+                  "
+                >
+
+                <!-- OVERLAY -->
+
+                <div
+                  class="
+                    absolute
+                    inset-0
+                    bg-gradient-to-t
+                    from-slate-950/80
+                    via-slate-900/20
+                    to-transparent
+                  "
+                ></div>
+
+                <!-- CONTENT -->
+
+                <div
+                  class="
+                    relative
+                    z-10
+                    text-center
+                    px-3
+                  "
+                >
+
+                  <div
+                    class="
+                      text-5xl
+                      mb-3
+                      transition-all
+                      duration-300
+                      group-hover:scale-110
+                    "
+                  >
+                    🖼️
+                  </div>
+
+                  <p
+                    class="
+                      text-sm
+                      text-slate-200
+                      font-medium
+                    "
+                  >
+                    {{ label }}
+                  </p>
+
+                  <p
+                    class="
+                      mt-2
+                      text-xs
+                      text-slate-400
+                    "
+                  >
+                    Cliquez pour ajouter une image
+                  </p>
+
+                </div>
+
+                <!-- INPUT -->
+
+                <input
+                  hidden
+                  type="file"
+                  accept="image/*"
+                  :name="imageFields[index]"
+                  @change="handleImageChange($event,index)"
+                />
+
+              </label>
+
+
+          </div>
+
         </div>
 
-        <!-- FORMULAIRE -->
-        <form class="p-8 space-y-6" @submit.prevent="handleSubmit" enctype="multipart/form-data" >
 
-          <!-- TYPE LOGEMENT -->
-          <div>
-            <label class="block mb-2 font-semibold text-gray-700">
-              Type Logement
-            </label>
-            <select
+      <!-- INFOS -->
 
-              v-model="form.type_logement"
-              name="type_logement"
-              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
-            >
-              <option value="cabane">Cabane</option>
-              <option value="chambre">Chambre</option>
-              <option value="appartement">Appartement</option>
-              <option value="bungalow">Bungalow</option>
-              <option value="villa">villa</option>
-              <option value="autre">Autre</option>
+      <div
+        class="
+          grid
+          grid-cols-1
+          md:grid-cols-3
+          gap-6
+        "
+      >
 
-            </select>
-          </div>
+        <!-- CHAMBRE -->
 
-          <!-- TITRE -->
-          <div>
-            <label class="block mb-2 font-semibold text-gray-700">
-              Titre
-            </label>
-            <input
-              name="titre"
-              v-model="form.titre"
-              type="text"
-              placeholder="Ex: Appartement moderne à Ivandry"
-              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
-            />
-          </div>
+        <div>
 
-          <!-- IMAGE -->
-          <div>
-            <label class="block mb-4 font-semibold text-gray-700">
-              Images du logement
-            </label>
+          <label
+            class="
+              mb-3
+              block
+              font-medium
+              text-slate-200
+            "
+          >
+            Chambres
+          </label>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                name="image_principale"
-                @change = "form.image_principale = $event.target.files[0]"
-                type="file"
-                class="w-full border border-gray-300 rounded-lg p-3"
-              />
+          <input
+            name="nb_chambre"
+            v-model="form.nb_chambre"
+            type="number"
+            min="0"
+            class="
+              w-full
+              rounded-2xl
+              border
+              border-white/10
+              bg-white/5
+              px-5
+              py-4
+              text-white
+              backdrop-blur-lg
+              transition-all
+              duration-300
+              focus:border-cyan-400/40
+              focus:bg-white/10
+              focus:outline-none
+              focus:ring-2
+              focus:ring-cyan-400/20
+            "
+          />
 
-              <input
-                name="image_1"
-                @change = "form.image_1 = $event.target.files[0]"
-                type="file"
-                class="w-full border border-gray-300 rounded-lg p-3"
-              />
+        </div>
 
-              <input
-                name="image_2"
-                @change = "form.image_2 = $event.target.files[0]"
-                type="file"
-                class="w-full border border-gray-300 rounded-lg p-3"
-              />
+        <!-- DOUCHE -->
 
-              <input
-                name="image_3"
-                @change = "form.image_3 = $event.target.files[0]"
-                type="file"
-                class="w-full border border-gray-300 rounded-lg p-3"
-              />
-            </div>
-          </div>
+        <div>
 
-          <!-- CHAMBRE DOUCHE WC -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <label
+            class="
+              mb-3
+              block
+              font-medium
+              text-slate-200
+            "
+          >
+            Douches
+          </label>
 
-            <div>
-              <label class="block mb-2 font-semibold text-gray-700">
-                Nombre de chambres
-              </label>
+          <input
+            name="nb_douche"
+            v-model="form.nb_douche"
+            type="number"
+            min="0"
+            class="
+              w-full
+              rounded-2xl
+              border
+              border-white/10
+              bg-white/5
+              px-5
+              py-4
+              text-white
+              backdrop-blur-lg
+              transition-all
+              duration-300
+              focus:border-cyan-400/40
+              focus:bg-white/10
+              focus:outline-none
+              focus:ring-2
+              focus:ring-cyan-400/20
+            "
+          />
 
-              <input
-                name="nb_chambre"
-                v-model="form.nb_chambre"
-                type="number"
-                min="0"
-                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
-              />
-            </div>
+        </div>
 
-            <div>
-              <label class="block mb-2 font-semibold text-gray-700">
-                Douche
-              </label>
+        <!-- WC -->
 
-              <input
-                name="nb_douche"
-                v-model="form.nb_douche"
-                type="number"
-                min="0"
-                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
-              />
-            </div>
+        <div>
 
-            <div>
-              <label class="block mb-2 font-semibold text-gray-700">
-                WC
-              </label>
+          <label
+            class="
+              mb-3
+              block
+              font-medium
+              text-slate-200
+            "
+          >
+            WC
+          </label>
 
-              <input
-                name="nb_wc"
-                v-model="form.nb_wc"
-                type="number"
-                min="0"
-                class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
-              />
-            </div>
+          <input
+            name="nb_wc"
+            v-model="form.nb_wc"
+            type="number"
+            min="0"
+            class="
+              w-full
+              rounded-2xl
+              border
+              border-white/10
+              bg-white/5
+              px-5
+              py-4
+              text-white
+              backdrop-blur-lg
+              transition-all
+              duration-300
+              focus:border-cyan-400/40
+              focus:bg-white/10
+              focus:outline-none
+              focus:ring-2
+              focus:ring-cyan-400/20
+            "
+          />
 
-          </div>
+        </div>
 
-          <!-- DESCRIPTION -->
-          <div>
-            <label class="block mb-2 font-semibold text-gray-700">
-              Description
-            </label>
-
-            <textarea
-              name="description"
-              v-model="form.description"
-              rows="5"
-              placeholder="Décrivez le logement..."
-              class="w-full border border-gray-300 rounded-lg px-4 py-3 resize-none focus:outline-none focus:ring-2 focus:ring-[#36465c]"
-            ></textarea>
-          </div>
-
-         <!-- PRIX -->
-          <div>
-            <label class="block mb-2 font-semibold text-gray-700">
-              Prix
-            </label>
-
-            <input
-              name="prix"
-              v-model="form.prix"
-              type="number"
-              placeholder="Ex: 120000"
-              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#36465c]"
-            />
-          </div>
-
-          <!-- LATITUDE LONGITUDE LOCALISATION -->       
-
-          <!-- BUTTON -->
-          <div class="flex items-center justify-end gap-4 pt-4">
-
-            <button
-              type="reset"
-              class="btn_default text-white"
-            >
-              Annuler
-            </button>
-
-            <button
-              type="submit"
-              class="btn_success text-white"
-            >
-              Enregistrer
-            </button>
-
-          </div>
-
-        </form>
       </div>
-    
+
+      <!-- DESCRIPTION -->
+
+      <div>
+
+        <label
+          class="
+            mb-3
+            block
+            font-medium
+            text-slate-200
+          "
+        >
+          Description
+        </label>
+
+        <textarea
+          name="description"
+          v-model="form.description"
+          rows="6"
+          placeholder="Décrivez le logement..."
+          class="
+            w-full
+            resize-none
+            rounded-2xl
+            border
+            border-white/10
+            bg-white/5
+            px-5
+            py-4
+            text-white
+            placeholder:text-slate-400
+            backdrop-blur-lg
+            transition-all
+            duration-300
+            focus:border-cyan-400/40
+            focus:bg-white/10
+            focus:outline-none
+            focus:ring-2
+            focus:ring-cyan-400/20
+          "
+        ></textarea>
+
+      </div>
+
+      <!-- PRIX -->
+
+      <div>
+
+        <label
+          class="
+            mb-3
+            block
+            font-medium
+            text-slate-200
+          "
+        >
+          Prix
+        </label>
+
+        <input
+          name="prix"
+          v-model="form.prix"
+          type="number"
+          placeholder="Ex: 120000"
+          class="
+            w-full
+            rounded-2xl
+            border
+            border-white/10
+            bg-white/5
+            px-5
+            py-4
+            text-white
+            placeholder:text-slate-400
+            backdrop-blur-lg
+            transition-all
+            duration-300
+            focus:border-cyan-400/40
+            focus:bg-white/10
+            focus:outline-none
+            focus:ring-2
+            focus:ring-cyan-400/20
+          "
+        />
+
+      </div>
+
+      <!-- ACTIONS -->
+
+      <div
+        class="
+          flex
+          flex-col
+          sm:flex-row
+          sm:justify-end
+          gap-4
+          pt-4
+        "
+      >
+
+        <button
+          type="reset"
+          class="
+            rounded-2xl
+            border
+            border-white/10
+            bg-white/5
+            px-6
+            py-4
+            font-medium
+            text-white
+            backdrop-blur-lg
+            transition-all
+            duration-300
+            hover:bg-white/10
+          "
+        >
+          Annuler
+        </button>
+
+        <button
+          type="submit"
+          class="
+            rounded-2xl
+            bg-gradient-to-r
+            from-cyan-500
+            to-blue-600
+            px-6
+            py-4
+            font-semibold
+            text-white
+            shadow-[0_0_25px_rgba(34,211,238,0.35)]
+            transition-all
+            duration-300
+            hover:scale-[1.02]
+            hover:shadow-[0_0_40px_rgba(34,211,238,0.5)]
+          "
+        >
+          Enregistrer
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
 
 </template>
